@@ -3,12 +3,12 @@
 #include "Game.h"
 
 int main() {
-	const int SCREEN_WIDTH = 400;
-	const int SCREEN_HEIGHT = 400;
-	const int FPS = 60;
+	constexpr int SCREEN_WIDTH = 400;
+	constexpr int SCREEN_HEIGHT = 400;
+	constexpr int FPS = 60;
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "Game Window" };
 
-	while (!game.GameShouldClose()) {
+	while (!Game::GameShouldClose()) {
 		game.Tick();
 	}
 

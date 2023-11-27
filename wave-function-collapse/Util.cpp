@@ -2,7 +2,7 @@
 
 
 
-std::vector<Tile> Util::Intersect(std::vector<Tile> first, std::vector<Tile> second)
+std::vector<Tile> Util::Intersect(const std::vector<Tile>& first, const std::vector<Tile>& second)
 {
 	std::vector<Tile> result;
 	for (Tile t : first)
@@ -22,9 +22,9 @@ std::vector<int> Util::LowestAboveZero(std::vector<int> vector)
 	std::vector<std::pair<int, int>> indexedVector;
 	indexedVector.reserve(vector.size());
 
-	for (int i = 0; i < vector.size(); ++i)
+	for (int i = 0; (size_t)i < vector.size(); ++i)
 	{
-		indexedVector.push_back({ vector[i], i });
+		indexedVector.emplace_back( vector[i], i );
 	}
 
 	std::sort(indexedVector.begin(), indexedVector.end(), [](const auto& a, const auto& b) {
@@ -65,7 +65,17 @@ int Util::RandomInt(int min, int max)
 	return distr(eng);
 }
 
-bool Util::Filled(std::vector<Tile> grid)
+float Util::RandomFloat(float min, float max)
+{
+	if (max == min)
+		return min;
+	std::random_device rd;
+	std::mt19937 eng(rd());
+	std::uniform_real_distribution<float> distr(min, max);
+	return distr(eng);
+}
+
+bool Util::Filled(const std::vector<Tile>& grid)
 {
 	for (Tile t : grid) {
 		if (t == Tile{ TileType::EMPTY }) {

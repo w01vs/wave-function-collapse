@@ -1,8 +1,7 @@
 #include "Tile.h"
 
 Tile::Tile()
-{
-}
+= default;
 
 Tile::Tile(TileType input)
 {
@@ -34,7 +33,6 @@ std::ostream& operator<<(std::ostream& os, const Tile& tile)
     case TileType::BEACH:
         os << "BEACH";
         break;
-        // Add more cases as needed
     default:
         os << "Unknown TileType";
     }
@@ -43,5 +41,5 @@ std::ostream& operator<<(std::ostream& os, const Tile& tile)
 
 Tile operator&(const Tile& lhs, const Tile& rhs)
 {
-    return Tile(static_cast<TileType>(static_cast<int>(lhs.type) & static_cast<int>(rhs.type)));
+    return {static_cast<TileType>(static_cast<int>(lhs.type) & static_cast<int>(rhs.type))};
 }

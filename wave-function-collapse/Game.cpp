@@ -1,6 +1,8 @@
 #include "Game.h"
 
-Game::Game(int width, int height, int fps, std::string title)
+#include <ranges>
+
+Game::Game(int width, int height, int fps, const std::string& title)
 {
 	assert(!GetWindowHandle());
 	InitWindow(width, height, title.c_str());
@@ -44,7 +46,7 @@ void Game::Draw() const
 	for (int i = 0; i < height * width; ++i)
 	{
 		const Tile tile = grid[i];
-		const std::tuple<int, int> pos = ToPos(i);
+		const std::tuple pos = ToPos(i);
 		const int x = std::get<0>(pos);
 		const int y = std::get<1>(pos);
 		switch (tile.type)
@@ -73,9 +75,8 @@ void Game::Init(int x, int y, int cell)
 	width = x / cell;
 	height = y / cell;
 	for (int i = 0; i < height * width; ++i)
-	{
 		grid.emplace_back(TileType::EMPTY);
-	}
+
 
 
 	map[TileType::BEACH] = std::vector<Tile>{ TileType::GRASS, TileType::WATER, TileType::BEACH };
@@ -86,58 +87,91 @@ void Game::Init(int x, int y, int cell)
 
 void Game::Collapse()
 {
-	std::vector entropyGrid(height * width, 0);
-	std::vector possibleTiles(height * width, std::vector<Tile>{});
+	std::vector entropyGrid((int)height * width, 0);
+	std::vector possibleTiles((int)height * width, std::vector<Tile>{});
 	
 	GenerateEntropy(entropyGrid, possibleTiles);
 
 	std::vector<int> const indices = Util::LowestAboveZero(entropyGrid);
 	if (indices.empty())
-	{
 		return;
-	}
 
 
-	int const random = Util::RandomInt(0, indices.size() - 1);
+	int const random = Util::RandomInt(0, (int)indices.size() - 1);
 	int const index = indices[random];
+	const std::pair pos = ToPos(index);
+	std::cout << pos.first << ", " << pos.second << " is now generating" << std::endl;
 	Tile result = TileType::EMPTY;
 	std::map<Tile, int> tiles;
 
-	std::vector surrounding = { Top(index), Right(index), Bottom(index), Left(index) };
+	const std::vector surrounding = { Top(index), Right(index), Bottom(index), Left(index) };
 
-	for (int i : surrounding)
+	for (const int i : surrounding)
 	{
 		if (IsOnGrid(i))
-		{
 			tiles[grid[i]]++;
-		}
+
 	}
 
 	int filledAround = 0;
-	std::vector<Tile> pt = Util::GetKeys(tiles);
-	for (Tile t : pt)
+	const std::vector<Tile> keys = Util::GetKeys(tiles);
+	for (Tile t : keys)
 	{
 		if(t != TileType::EMPTY)
-		{
 			filledAround++;
+
+	}
+	std::map<Tile, float> tileChance;
+	if(filledAround > 0)
+	{
+		
+		float multipleTiles= 0;
+		for(const TileType t : Tile::ALL)
+		{
+			if(t != TileType::EMPTY)
+				multipleTiles += (float)tiles[t];
+		}
+		const float part = 100 / ((float)possibleTiles[index].size() + multipleTiles);
+		for (const Tile t : possibleTiles[index])
+		{
+			tiles[t]++;
+			tileChance[t] = (float)tiles[t] * part;
 		}
 	}
-
-	// divide by 0
-	//const auto divider = static_cast<float>(entropyGrid[index] / filledAround);
-	// create a map with tile as key, chance (tile count * divider) as value, !!set chance for non-valid tiles to 0!! so you can predefine the chance comparisons.
+	
 	// do a random chance for each tile possible
-	if (result == TileType::EMPTY)
+	if (!tileChance.empty())
 	{
-		const int rand = Util::RandomInt(0, possibleTiles[index].size() - 1);
+		std::vector<std::pair<Tile, float>> reverse;
+		reverse.reserve(tileChance.size());
+		for (const std::pair<Tile, float> p : tileChance)
+		{
+			reverse.emplace_back(p.first, p.second);
+		}
+
+		std::sort(reverse.begin(), reverse.end(), [](const auto a, const auto b) {return a.second < b.second; });
+		const float rand = Util::RandomFloat(0, 100);
+		float totalChance = 0;
+		for (const auto pair : reverse)
+		{
+			const float chanceForTile = tileChance[pair.first];
+			const float actualChance = chanceForTile + totalChance;
+			totalChance += chanceForTile;
+			if(rand < actualChance)
+			{
+				result = pair.first;
+				break;
+			}
+		}
+	}
+	else
+	{
+		const int rand = Util::RandomInt(0, (int)possibleTiles[index].size() - 1);
 		result = possibleTiles[index][rand];
 	}
 
 	grid[index] = result;
-	std::tuple const pos = ToPos(index);
-	const int x = std::get<0>(pos);
-	const int y = std::get<1>(pos);
-	std::cout << x << ", " << y << "- Turned into: " << grid[index] << "\n";
+	std::cout << pos.first << ", " << pos.second << "- Turned into: " << grid[index] << std::endl;
 }
 
 void Game::GenerateEntropy(std::vector<int>& entropy, std::vector<std::vector<Tile>>& possibilities) const
@@ -187,7 +221,7 @@ void Game::GenerateEntropy(std::vector<int>& entropy, std::vector<std::vector<Ti
 
 		possibilities[i] = result;
 
-		entropy[i] = possibilities[i].size();
+		entropy[i] = (int)possibilities[i].size();
 	}
 }
 
@@ -199,9 +233,7 @@ bool Game::AdjacentEmpty(int i) const
 		if(IsOnGrid(n))
 		{
 			if (grid[n] != TileType::EMPTY)
-			{
 				return false;
-			}
 		}
 	}
 	return true;
@@ -229,5 +261,5 @@ int Game::Bottom(int index) const
 
 int Game::IsOnGrid(int index) const
 {
-	return index > 0 && index < grid.size();
+	return index > 0 && (float)index < grid.size();
 }
