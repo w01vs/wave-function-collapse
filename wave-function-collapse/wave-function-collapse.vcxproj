@@ -142,13 +142,18 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Wavefunction.cpp" />
+    <ClCompile Include="WFModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileType.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Wavefunction.h" />
+    <ClInclude Include="WFModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

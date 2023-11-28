@@ -11,7 +11,7 @@ public:
 	Tile();
 	Tile(TileType input);
 	TileType type;
-	inline static const std::vector<TileType> ALL = { TileType::EMPTY, TileType::BEACH, TileType::GRASS, TileType::WATER };
+	inline static const std::vector<TileType> ALL = { TileType::BEACH, TileType::GRASS, TileType::WATER };
 	bool operator==(const Tile& other) const;
 	bool operator<(const Tile& other) const;
 	friend std::ostream& operator<<(std::ostream& os, const Tile& tile);

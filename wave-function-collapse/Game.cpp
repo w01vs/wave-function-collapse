@@ -79,10 +79,15 @@ void Game::Init(int x, int y, int cell)
 
 
 
-	map[TileType::BEACH] = std::vector<Tile>{ TileType::GRASS, TileType::WATER, TileType::BEACH };
-	map[TileType::GRASS] = std::vector<Tile>{ TileType::GRASS, TileType::BEACH };
-	map[TileType::WATER] = std::vector<Tile>{ TileType::WATER, TileType::BEACH };
-	map[TileType::EMPTY] = std::vector<Tile>{ TileType::GRASS, TileType::WATER, TileType::BEACH };
+	map[TileType::BEACH] = {
+		{ {UP, {"YELLOW", "YELLOW", "YELLOW"}}, {RIGHT, {"YELLOW", "YELLOW", "YELLOW"} }, {DOWN, {"YELLOW", "YELLOW", "YELLOW"}}, {LEFT, {"YELLOW", "YELLOW", "YELLOW"}} }
+	};
+	map[TileType::GRASS] = {
+		{ {UP, {"GREEN", "GREEN", "GREEN"}}, {RIGHT, {"GREEN", "GREEN", "GREEN"} }, {DOWN, {"GREEN", "GREEN", "GREEN"}}, {LEFT, {"GREEN", "GREEN", "GREEN"}} }
+	};
+	map[TileType::WATER] = {
+		{ {UP, {"BLUE", "BLUE", "BLUE"}}, {RIGHT, {"BLUE", "BLUE", "BLUE"} }, {DOWN, {"BLUE", "BLUE", "BLUE"}}, {LEFT, {"BLUE", "BLUE", "BLUE"}} }
+	};
 }
 
 void Game::Collapse()
@@ -104,11 +109,11 @@ void Game::Collapse()
 	Tile result = TileType::EMPTY;
 	std::map<Tile, int> tiles;
 
-	const std::vector surrounding = { Top(index), Right(index), Bottom(index), Left(index) };
+	const std::vector surrounding = { Util::Top(index, width), Util::Right(index), Util::Bottom(index, width), Util::Left(index) };
 
 	for (const int i : surrounding)
 	{
-		if (IsOnGrid(i))
+		if (Util::IsOnGrid(i, grid))
 			tiles[grid[i]]++;
 
 	}
@@ -192,23 +197,23 @@ void Game::GenerateEntropy(std::vector<int>& entropy, std::vector<std::vector<Ti
 
 		if (l)
 		{
-			std::vector<Tile> left = map.at(grid[Left(i)]);
+			std::vector<Tile> left = map.at(grid[Util::Left(i)]);
 			result = Util::Intersect(result, left);
 		}
 		if (r)
 		{
-			std::vector<Tile> right = map.at(grid[Right(i)]);
+			std::vector<Tile> right = map.at(grid[Util::Right(i)]);
 			result = Util::Intersect(result, right);
 		}
 		if (t)
 		{
-			std::vector<Tile> top = map.at(grid[Top(i)]);
+			std::vector<Tile> top = map.at(grid[Util::Top(i, width)]);
 			result = Util::Intersect(result, top);
 		}
 
 		if (b)
 		{
-			std::vector<Tile> bottom = map.at(grid[Bottom(i)]);
+			std::vector<Tile> bottom = map.at(grid[Util::Bottom(i, width)]);
 			result = Util::Intersect(result, bottom);
 		}
 
@@ -227,39 +232,14 @@ void Game::GenerateEntropy(std::vector<int>& entropy, std::vector<std::vector<Ti
 
 bool Game::AdjacentEmpty(int i) const
 {
-	const std::vector adjacent = { Left(i), Right(i), Top(i), Bottom(i) };
+	const std::vector adjacent = { Util::Left(i), Util::Right(i), Util::Top(i, width), Util::Bottom(i, width) };
 	for (const int n : adjacent)
 	{
-		if(IsOnGrid(n))
+		if(Util::IsOnGrid(n, grid))
 		{
 			if (grid[n] != TileType::EMPTY)
 				return false;
 		}
 	}
 	return true;
-}
-
-int Game::Right(int index) const
-{
-	return index + 1;
-}
-
-int Game::Left(int index) const
-{
-	return index - 1;
-}
-
-int Game::Top(int index) const
-{
-	return index - width;
-}
-
-int Game::Bottom(int index) const
-{
-	return index + width;
-}
-
-int Game::IsOnGrid(int index) const
-{
-	return index > 0 && (float)index < grid.size();
 }

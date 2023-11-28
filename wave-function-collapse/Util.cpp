@@ -65,13 +65,15 @@ int Util::RandomInt(int min, int max)
 	return distr(eng);
 }
 
+
+// !! EXCLUSIVE UPPER BOUND !!
 float Util::RandomFloat(float min, float max)
 {
 	if (max == min)
 		return min;
 	std::random_device rd;
 	std::mt19937 eng(rd());
-	std::uniform_real_distribution<float> distr(min, max);
+	std::uniform_real_distribution distr(min, max);
 	return distr(eng);
 }
 
@@ -83,4 +85,24 @@ bool Util::Filled(const std::vector<Tile>& grid)
 		}
 	}
 	return true;
+}
+
+int Util::Right(int index)
+{
+	return index + 1;
+}
+
+int Util::Left(int index)
+{
+	return index - 1;
+}
+
+int Util::Bottom(int index, int width)
+{
+	return index + width;
+}
+
+int Util::Top(int index, int width)
+{
+	return index - width;
 }

@@ -1,3 +1,4 @@
 TO-DO:
-- Include diagonals in tile possibility check
 - Use sprites instead of solid rectangles
+- Actually use the triple-check for asymmetric tiles
+- Implement rotating tiles to ease manual tile-mapping

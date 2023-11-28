@@ -17,6 +17,8 @@
 #include <bitset>
 #include <list>
 #include "Tile.h"
+#include "Direction.h"
+#include <string>
 
 class Game {
 public:
@@ -37,11 +39,6 @@ private:
 
 	[[nodiscard]] bool AdjacentEmpty(int i) const;
 	[[nodiscard]] int ToGridPos(int x, int y) const;
-	[[nodiscard]] int Right(int index)  const;
-	[[nodiscard]] int Left(int index) const;
-	[[nodiscard]] int Top(int index) const;
-	[[nodiscard]] int Bottom(int index) const;
-	[[nodiscard]] int IsOnGrid(int index) const;
 	[[nodiscard]] std::pair<int, int> ToPos(int gridPos) const;
 public:
 
@@ -51,7 +48,7 @@ private:
 	int width;
 	int height;
 	std::vector<Tile> grid;
-	std::map<Tile, std::vector<Tile>> map;
+	std::map<Tile, std::map<Dir, std::vector<std::string>>> map;
 };
 
 #endif
