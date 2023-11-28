@@ -5,50 +5,37 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <bitset>
 #include <raylib.h>
 #include <assert.h>
 #include <iostream>
-#include <bitset>
-#include <list>
-#include "Util.h"
-#include <raylib.h>
-#include <assert.h>
-#include <iostream>
-#include <bitset>
-#include <list>
 #include "Tile.h"
 #include "Direction.h"
-#include <string>
+#include "WFModel.h"
 
 class Game {
 public:
-	Game(int width, int height, int fps, const std::string& title);
+	Game(int width, int height, int fps, const std::string& title, int cell);
 	~Game() noexcept;
 	Game& operator=(const Game& other) = delete;
 	Game(const Game& other) = delete;
 	static bool GameShouldClose();
 	void Tick();
-
 private:
 	
 	void Draw() const;
 	void Update();
 	void Init(int x, int y, int cell);
-	void Collapse();
-	void GenerateEntropy(std::vector<int>& entropy, std::vector<std::vector<Tile>>& possibilities) const;
 
-	[[nodiscard]] bool AdjacentEmpty(int i) const;
-	[[nodiscard]] int ToGridPos(int x, int y) const;
-	[[nodiscard]] std::pair<int, int> ToPos(int gridPos) const;
-public:
-
-private:
-	bool filled;
+	
+	bool finished;
 	int cellsize;
 	int width;
 	int height;
 	std::vector<Tile> grid;
 	std::map<Tile, std::map<Dir, std::vector<std::string>>> map;
+	std::map<Tile, float> weights;
+	WFModel model;
 };
 
 #endif

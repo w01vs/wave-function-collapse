@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <map>
 
-#include "Game.h"
-
 class Util
 {
 public:
@@ -47,15 +45,16 @@ public:
 	{
 		return std::find(vector.begin(), vector.end(), value) != vector.end();
 	}
-	[[nodiscard]] static int Right(int index);
-	[[nodiscard]] static int Left(int index);
+	[[nodiscard]] static int Right(int index, int width);
+	[[nodiscard]] static int Left(int index, int width);
 	[[nodiscard]] static int Top(int index, int width);
 	[[nodiscard]] static int Bottom(int index, int width);
 	template<typename T>
 	[[nodiscard]] static bool IsOnGrid(int index, const std::vector<T>& vector)
 	{
-		return (size_t)index < vector.size - 1 && index > -1;
+		return (size_t)index < vector.size() - 1 && index > -1;
 	}
+	[[nodiscard]] static std::pair<int, int> ToPos(int gridPos, int width, int height);
 	
 };
 

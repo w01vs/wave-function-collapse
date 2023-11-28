@@ -1,17 +1,26 @@
 #pragma once
+
+#ifndef	WFMODEL_H
+#define WFMODEL_H
+
 #include <vector>
 #include <map>
 #include "Tile.h"
 #include "Wavefunction.h"
+#include "Direction.h"
 #include <stack>
+#include "Util.h"
+
 
 class WFModel
 {
 public:
-	WFModel(int width, int height, const std::map<Tile, float>& weights, std::vector<Tile>& grid, const std::map<Tile, std::map<Dir, std::string>>& tilemap);
-	void Run();
+	WFModel();
+	WFModel(int width, int height, const std::map<Tile, float>& weights, const std::map<Tile, std::map<Dir, std::vector<std::string>>>& tilemap);
+	std::vector<Tile> Iterate();
+	[[nodiscard]] bool FullyCollapsed() const;
+	[[nodiscard]] std::vector<Tile> FinishedGrid() const;
 private:
-	int Iterate();
 	void Propagate(int index);
 	[[nodiscard]] int GetLowestEntropyIndex() const;
 	[[nodiscard]] std::vector<Dir> ValidNeighbours(int index) const;
@@ -22,6 +31,7 @@ private:
 	int height;
 	Wavefunction wavefunction;
 	std::vector<Tile> grid;
-	std::map<Tile, std::map<Dir, std::string>>& tilemap;
+	std::map<Tile, std::map<Dir, std::vector<std::string>>> tilemap;
 };
 
+#endif

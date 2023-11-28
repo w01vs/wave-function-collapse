@@ -87,14 +87,18 @@ bool Util::Filled(const std::vector<Tile>& grid)
 	return true;
 }
 
-int Util::Right(int index)
+int Util::Right(int index, int width)
 {
-	return index + 1;
+	if (index % width - 1 != 0)
+		return index + 1;
+	return -1;
 }
 
-int Util::Left(int index)
+int Util::Left(int index, int width)
 {
-	return index - 1;
+	if (index % width != 0)
+		return index - 1;
+	return -1;
 }
 
 int Util::Bottom(int index, int width)
@@ -105,4 +109,11 @@ int Util::Bottom(int index, int width)
 int Util::Top(int index, int width)
 {
 	return index - width;
+}
+
+std::pair<int, int> Util ::ToPos(int gridPos, int width, int height)
+{
+	int x = gridPos % height;
+	int y = (gridPos - x) / width;
+	return { x, y };
 }

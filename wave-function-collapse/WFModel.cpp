@@ -1,30 +1,38 @@
 #include "WFModel.h"
 
-WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, std::vector<Tile>& grid, const std::map<Tile, std::map<Dir, std::string>>& tilemap)
+
+WFModel::WFModel()
+= default;
+
+WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, const std::map<Tile, std::map<Dir, std::vector<std::string>>>& tilemap)
 {
 	this->width = width;
 	this->height = height;
 	wavefunction = Wavefunction(width, height, weights);
-	this->grid = grid;
 	this->tilemap = tilemap;
-}
-
-void WFModel::Run()
-{
-	while(!wavefunction.Collapsed())
+	for(int i = 0; i < width * height; ++i)
 	{
-		const int index = Iterate();
-		grid[index] = wavefunction.GetPossibleTilesAt(index)[0];
+		grid.emplace_back(TileType::EMPTY);
 	}
 }
 
-int WFModel::Iterate()
+std::vector<Tile> WFModel::Iterate()
 {
 	const int index = GetLowestEntropyIndex();
-	wavefunction.Collapse(index);
+	grid[index] = wavefunction.Collapse(index);
 	Propagate(index);
 
-	return index;
+	return grid;
+}
+
+bool WFModel::FullyCollapsed() const
+{
+	return wavefunction.Collapsed();
+}
+
+std::vector<Tile> WFModel::FinishedGrid() const
+{
+	return wavefunction.GetAllCollapsed();
 }
 
 void WFModel::Propagate(int index)
@@ -45,8 +53,6 @@ void WFModel::Propagate(int index)
 				for(const Tile tile : possibleTiles)
 				{
 					tilePossible |= Check(tile, otherTile, dir);
-					if (tilePossible)
-						break;
 				}
 
 				if (!tilePossible)
@@ -82,14 +88,14 @@ int WFModel::GetLowestEntropyIndex() const
 std::vector<Dir> WFModel::ValidNeighbours(int index) const
 {
 	std::vector<Dir> result;
-	if (Util::IsOnGrid(Util::Right(index), grid)) result.emplace_back(RIGHT);
-	if (Util::IsOnGrid(Util::Left(index), grid)) result.emplace_back(LEFT);
+	if (Util::IsOnGrid(Util::Right(index, width), grid)) result.emplace_back(RIGHT);
+	if (Util::IsOnGrid(Util::Left(index, width), grid)) result.emplace_back(LEFT);
 	if (Util::IsOnGrid(Util::Top(index, width), grid)) result.emplace_back(UP);
 	if (Util::IsOnGrid(Util::Bottom(index, width), grid)) result.emplace_back(DOWN);
 	return result;
 }
 
-int WFModel::GetNeighbour(int index, const Dir direction) const
+int WFModel::GetNeighbour(int index, Dir direction) const
 {
 	switch(direction)
 	{
@@ -100,10 +106,10 @@ int WFModel::GetNeighbour(int index, const Dir direction) const
 		if (Util::IsOnGrid(Util::Bottom(index, width), grid)) return Util::Bottom(index, width);
 		break;
 	case RIGHT:
-		if (Util::IsOnGrid(Util::Right(index), grid)) return Util::Right(index);
+		if (Util::IsOnGrid(Util::Right(index, width), grid)) return Util::Right(index, width);
 		break;
 	case LEFT:
-		if (Util::IsOnGrid(Util::Left(index), grid)) return Util::Left(index);
+		if (Util::IsOnGrid(Util::Left(index, width), grid)) return Util::Left(index, width);
 		break;
 	}
 	
@@ -112,7 +118,21 @@ int WFModel::GetNeighbour(int index, const Dir direction) const
 
 bool WFModel::Check(Tile tile1, Tile tile2, Dir dir, int rotation1, int rotation2) const
 {
-	if (tilemap[tile1][dir] == tilemap[tile2][OppositeDirection(dir)]) return true;
+	//if (tilemap.at(tile1).at(dir) == tilemap.at(tile2).at(OppositeDirection(dir))) return true;
+	switch(tile1.type)
+	{
+	case TileType::BEACH:
+		if (tile2 == TileType::WATER or tile2 == TileType::BEACH or tile2 == TileType::GRASS) return true;
+		break;
+	case TileType::GRASS:
+		if (tile2 == TileType::GRASS or tile2 == TileType::BEACH) return true;
+		break;
+	case TileType::WATER:
+		if (tile2 == TileType::WATER or tile2 == TileType::BEACH) return true;
+		break;
+	default:
+		break;
+	}
 	return false;
 }
 

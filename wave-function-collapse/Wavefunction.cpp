@@ -1,5 +1,6 @@
 #include "Wavefunction.h"
 
+
 Wavefunction::Wavefunction()
 = default;
 
@@ -14,9 +15,10 @@ Wavefunction::Wavefunction(int width, int height, const std::map<Tile, float>& w
 std::vector<std::vector<Tile>> Wavefunction::InitPossibilitiesGrid(int width, int height, const std::vector<Tile>& tiles)
 {
 	std::vector<std::vector<Tile>> Tiles;
+	Tiles.reserve(tiles.size());
 	for(int i = 0; i < width * height; ++i)
 	{
-		Tiles[i] = tiles;
+		Tiles.emplace_back(tiles);
 	}
 	return Tiles;
 }
@@ -24,6 +26,17 @@ std::vector<std::vector<Tile>> Wavefunction::InitPossibilitiesGrid(int width, in
 std::vector<Tile> Wavefunction::GetPossibleTilesAt(int index) const
 {
 	return tiles[index];
+}
+
+std::vector<Tile> Wavefunction::GetAllCollapsed() const
+{
+	std::vector<Tile> result;
+	result.reserve(tiles.size());
+	for(const std::vector<Tile> t : tiles)
+	{
+		result.emplace_back(t[0]);
+	}
+	return result;
 }
 
 float Wavefunction::EntropyAt(int index) const
@@ -43,20 +56,20 @@ Tile Wavefunction::Collapse(int index)
 {
 	std::vector<std::pair<Tile, float>> filtered;
 	filtered.reserve(weights.size());
-	auto options = tiles[x];
+	auto options = tiles[index];
 	for(std::pair<Tile, float> t : weights)
 	{
 		filtered.emplace_back(t);
 	}
 
-	float totalWeight = std::accumulate(filtered.begin(), filtered.end(), 0.0f, [](float partial, const std::pair<Tile, float>& p)
-		{
-			return partial + p.second;
-		});
+	const float totalWeight = std::accumulate(filtered.begin(), filtered.end(), 0.0f, [](float partial, const std::pair<Tile, float>& p)
+	{
+		return partial + p.second;
+	});
 
 	float rnd = Util::RandomFloat(0.0f, 1.0f) * totalWeight;
 	Tile chosen;
-	for(std::pair<Tile,float> pair : filtered)
+	for(const std::pair<Tile,float> pair : filtered)
 	{
 		rnd -= pair.second;
 		if (rnd < 0)
@@ -66,6 +79,10 @@ Tile Wavefunction::Collapse(int index)
 		}
 	}
 
+	std::pair pos = Util::ToPos(index, width, height);
+	const int x = pos.first;
+	const int y = pos.second;
+	std::cout << x << ", " << y << " - has turned into: " << chosen << std::endl;
 	tiles[index] = { chosen };
 	return chosen;
 }
