@@ -1,5 +1,7 @@
 #include "DynamicArray.h"
 
+#include <new>
+
 template <typename T>
 DynamicArray<T>::DynamicArray(int size)
 {
@@ -34,19 +36,22 @@ DynamicArray<T>::DynamicArray(const DynamicArray& source)
 template <typename T>
 DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray& other)
 {
-	if (this == &other)
-		return *this;
-
-	delete[] ptr;
-	ptr = nullptr;
-
-	ptr = new T[other.size];
-	size = other.size;
-	for (int i = 0; i < size; ++i)
+	if(this != &other)
 	{
-		ptr[i] = other.ptr[i];
-	}
-
+		size = other.size;
+		delete[] ptr;
+		try
+		{
+			ptr = new T[other.size];
+			for (int i = 0; i < size; ++i)
+				ptr[i] = other.ptr[i];
+		}
+		catch(std::bad_alloc &)
+		{
+			ptr = nullptr;
+			throw;
+		}
+ 	}
 	return *this;
 }
 
