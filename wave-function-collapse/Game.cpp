@@ -4,7 +4,6 @@ Game::Game(int width, int height, int fps, const std::string& title, int cell)
 {
 	assert(!GetWindowHandle());
 	InitWindow(width, height, title.c_str());
-	Init(width, height, 16);
 	cellsize = cell;
 	this->width = width / cell;
 	this->height = height / cell;
@@ -19,10 +18,15 @@ Game::Game(int width, int height, int fps, const std::string& title, int cell)
 		{ {UP, {"BLUE", "BLUE", "BLUE"}}, {RIGHT, {"BLUE", "BLUE", "BLUE"} }, {DOWN, {"BLUE", "BLUE", "BLUE"}}, {LEFT, {"BLUE", "BLUE", "BLUE"}} }
 	};
 
-	weights[TileType::BEACH] = 0.33f;
-	weights[TileType::GRASS] = 0.33f;
-	weights[TileType::WATER] = 0.33f;
+	weights[TileType::BEACH] = 1.0f / 3.0f;
+	weights[TileType::GRASS] = 1.0f / 3.0f;
+	weights[TileType::WATER] = 1.0f / 3.0f;
 	model = WFModel(this->width, this->height, weights, map);
+
+	SetTargetFPS(fps);
+
+	SpriteManager sp;
+	sp.LoadSprites();
 }
 
 Game::~Game() noexcept
@@ -76,11 +80,4 @@ void Game::Update()
 			grid = model.FinishedGrid();
 		}
 	}
-
-
-}
-
-void Game::Init(int x, int y, int cell)
-{
-	
 }

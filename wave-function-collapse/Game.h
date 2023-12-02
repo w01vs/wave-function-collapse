@@ -12,6 +12,7 @@
 #include "Tile.h"
 #include "Direction.h"
 #include "WFModel.h"
+#include "SpriteManager.h"
 
 class Game {
 public:
@@ -25,7 +26,6 @@ private:
 	
 	void Draw() const;
 	void Update();
-	void Init(int x, int y, int cell);
 
 	
 	bool finished;

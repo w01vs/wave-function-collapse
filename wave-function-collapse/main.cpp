@@ -9,7 +9,7 @@ int main() {
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "Game Window", 16 };
 
 	while (!Game::GameShouldClose()) {
-		game.Tick();
+		//game.Tick();
 	}
 
 	return 0;

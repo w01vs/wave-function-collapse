@@ -1,4 +1,4 @@
 TO-DO:
 - Use sprites instead of solid rectangles
-- Actually use the triple-check for asymmetric tiles
+-- Actually use the triple-check for asymmetric tiles (if I actually get asymmetric tiles :) )
 - Implement rotating tiles to ease manual tile-mapping
