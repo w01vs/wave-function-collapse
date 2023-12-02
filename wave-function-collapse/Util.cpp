@@ -111,9 +111,14 @@ int Util::Top(int index, int width)
 	return index - width;
 }
 
-std::pair<int, int> Util ::ToPos(int gridPos, int width, int height)
+std::pair<int, int> Util::ToPos(int gridPos, int width, int height)
 {
 	int x = gridPos % height;
 	int y = (gridPos - x) / width;
 	return { x, y };
+}
+
+int Util::ToGridPos(int x, int y, int width)
+{
+	return width * x + y;
 }

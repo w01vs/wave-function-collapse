@@ -11,13 +11,13 @@
 class Util
 {
 public:
-	static std::vector<Tile> Intersect(const std::vector<Tile>& first, const std::vector<Tile>& second);
-	static std::vector<int> LowestAboveZero(std::vector<int> vector);
-	static int RandomInt(int min, int max);
-	static float RandomFloat(float min, float max);
-	static bool Filled(const std::vector<Tile>& grid);
+	[[nodiscard]] static std::vector<Tile> Intersect(const std::vector<Tile>& first, const std::vector<Tile>& second);
+	[[nodiscard]] static std::vector<int> LowestAboveZero(std::vector<int> vector);
+	[[nodiscard]] static int RandomInt(int min, int max);
+	[[nodiscard]] static float RandomFloat(float min, float max);
+	[[nodiscard]] static bool Filled(const std::vector<Tile>& grid);
 	template<typename T, typename Y>
-	static std::vector<T> GetKeys(const std::map<T, Y>& map)
+	[[nodiscard]] static std::vector<T> GetKeys(const std::map<T, Y>& map)
 	{
 		std::vector<T> keys;
 		keys.reserve(map.size());
@@ -29,7 +29,7 @@ public:
 		return keys;
 	}
 	template <typename T, typename Y>
-	static std::vector<Y> GetValues(const std::map<T, Y>& map)
+	[[nodiscard]] static std::vector<Y> GetValues(const std::map<T, Y>& map)
 	{
 		std::vector<Y> keys;
 		keys.reserve(map.size());
@@ -41,7 +41,7 @@ public:
 		return keys;
 	}
 	template<typename T>
-	static bool Contains(const std::vector<T>& vector, T value)
+	[[nodiscard]] static bool Contains(const std::vector<T>& vector, T value)
 	{
 		return std::find(vector.begin(), vector.end(), value) != vector.end();
 	}
@@ -55,6 +55,7 @@ public:
 		return (size_t)index < vector.size() && index > -1;
 	}
 	[[nodiscard]] static std::pair<int, int> ToPos(int gridPos, int width, int height);
+	[[nodiscard]] static int ToGridPos(int x, int y, int width);
 	
 };
 
