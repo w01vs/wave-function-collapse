@@ -18,9 +18,13 @@ WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, co
 
 std::vector<Tile> WFModel::Iterate()
 {
+	
 	const int index = GetLowestEntropyIndex();
+	if (index == 7) 
+		auto x = 5;
 	grid[index] = wavefunction.Collapse(index);
 	Propagate(index);
+	int x = wavefunction.EntropyAt(index);
 
 	return grid;
 }
@@ -44,10 +48,12 @@ void WFModel::Propagate(int index)
 		const int current = stack.top();
 		stack.pop();
 		std::vector<Tile> possibleTiles = wavefunction.GetPossibleTilesAt(current);
-		for(const Dir dir : ValidNeighbours(current))
+		std::vector<Dir> dirs = ValidNeighbours(current);
+		for(const Dir dir : dirs)
 		{
 			const int otherIndex = GetNeighbour(current, dir);
-			for(const Tile otherTile : wavefunction.GetPossibleTilesAt(otherIndex))
+			const std::vector<Tile> otherTiles = wavefunction.GetPossibleTilesAt(otherIndex);
+			for(const Tile otherTile : otherTiles)
 			{
 				bool tilePossible = false;
 				for(const Tile tile : possibleTiles)
@@ -55,10 +61,14 @@ void WFModel::Propagate(int index)
 					tilePossible |= Check(tile, otherTile, dir);
 				}
 
-				if (!tilePossible)
+				if (!tilePossible && otherTiles.size() != 1)
 				{
 					wavefunction.RemoveTileAt(otherIndex, otherTile);
 					stack.push(otherIndex);
+					const std::pair pos = Util::ToPos(otherIndex, width, height);
+					const int x = pos.first;
+					const int y = pos.second;
+					std::cout << "Removed: " << otherTile << " from " << x << ", " << y << std::endl;
 				}
 			}
 		}
@@ -88,10 +98,14 @@ int WFModel::GetLowestEntropyIndex() const
 std::vector<Dir> WFModel::ValidNeighbours(int index) const
 {
 	std::vector<Dir> result;
-	if (Util::IsOnGrid(Util::Right(index, width), grid)) result.emplace_back(RIGHT);
-	if (Util::IsOnGrid(Util::Left(index, width), grid)) result.emplace_back(LEFT);
-	if (Util::IsOnGrid(Util::Top(index, width), grid)) result.emplace_back(UP);
-	if (Util::IsOnGrid(Util::Bottom(index, width), grid)) result.emplace_back(DOWN);
+	const int right = Util::Right(index, width);
+	const int left = Util::Left(index, width);
+	const int top = Util::Top(index, width);
+	const int bottom = Util::Bottom(index, width);
+	if (Util::IsOnGrid(right, grid) && wavefunction.GetPossibleTilesAt(right).size() != 1) result.emplace_back(RIGHT);
+	if (Util::IsOnGrid(left, grid) && wavefunction.GetPossibleTilesAt(left).size() != 1) result.emplace_back(LEFT);
+	if (Util::IsOnGrid(top, grid) && wavefunction.GetPossibleTilesAt(top).size() != 1) result.emplace_back(UP);
+	if (Util::IsOnGrid(bottom, grid) && wavefunction.GetPossibleTilesAt(bottom).size() != 1) result.emplace_back(DOWN);
 	return result;
 }
 

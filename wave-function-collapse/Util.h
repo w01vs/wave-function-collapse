@@ -52,7 +52,7 @@ public:
 	template<typename T>
 	[[nodiscard]] static bool IsOnGrid(int index, const std::vector<T>& vector)
 	{
-		return (size_t)index < vector.size() - 1 && index > -1;
+		return (size_t)index < vector.size() && index > -1;
 	}
 	[[nodiscard]] static std::pair<int, int> ToPos(int gridPos, int width, int height);
 	

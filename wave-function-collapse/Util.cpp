@@ -89,14 +89,14 @@ bool Util::Filled(const std::vector<Tile>& grid)
 
 int Util::Right(int index, int width)
 {
-	if (index % width - 1 != 0)
+	if (index % width != width - 1)
 		return index + 1;
 	return -1;
 }
 
 int Util::Left(int index, int width)
 {
-	if (index % width != 0)
+	if (index % width != width)
 		return index - 1;
 	return -1;
 }

@@ -1,5 +1,7 @@
 #include "Wavefunction.h"
 
+#include <ranges>
+
 
 Wavefunction::Wavefunction()
 = default;
@@ -52,14 +54,16 @@ float Wavefunction::EntropyAt(int index) const
 	return std::log(weightSum) - weightSumLog / weightSum;
 }
 
+
 Tile Wavefunction::Collapse(int index)
 {
 	std::vector<std::pair<Tile, float>> filtered;
 	filtered.reserve(weights.size());
-	auto options = tiles[index];
+	const std::vector<Tile> options = tiles[index];
 	for(std::pair<Tile, float> t : weights)
 	{
-		filtered.emplace_back(t);
+		if(Util::Contains(options, t.first))
+			filtered.emplace_back(t);
 	}
 
 	const float totalWeight = std::accumulate(filtered.begin(), filtered.end(), 0.0f, [](float partial, const std::pair<Tile, float>& p)
@@ -79,7 +83,7 @@ Tile Wavefunction::Collapse(int index)
 		}
 	}
 
-	std::pair pos = Util::ToPos(index, width, height);
+	const std::pair pos = Util::ToPos(index, width, height);
 	const int x = pos.first;
 	const int y = pos.second;
 	std::cout << x << ", " << y << " - has turned into: " << chosen << std::endl;
