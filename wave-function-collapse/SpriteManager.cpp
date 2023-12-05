@@ -22,7 +22,31 @@ void SpriteManager::LoadSprites()
 		
 		Image image = LoadImage(p);
 		Texture2D tex = LoadTextureFromImage(image);
+		Color* colors = LoadImageColors(image);
 
+		
+
+		for(int i = 0; i < image.width; ++i)
+		{
+			colorMap[str][UP].emplace_back(colors[i]);
+		}
+
+		for(int i = 0; i < image.width; ++i)
+		{
+			colorMap[str][DOWN].emplace_back(colors[(image.height - 1) * image.width + i]);
+		}
+
+		for(int i = 0; i < image.height; ++i)
+		{
+			colorMap[str][LEFT].emplace_back(colors[(ptrdiff_t)i * image.width]);
+		}
+
+		for(int i = 0; i < image.height; ++i)
+		{
+			colorMap[str][RIGHT].emplace_back(colors[i * image.width + image.width - 1]);
+		}
+
+		UnloadImageColors(colors);
 		textureLookup[str] = tex;
 		ImageRotateCW(&image);
 		tex = LoadTextureFromImage(image);

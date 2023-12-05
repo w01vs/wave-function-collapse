@@ -8,6 +8,7 @@
 #include "raylib.h"
 #include <iostream>
 #include <filesystem>
+#include "Direction.h"
 
 class SpriteManager
 {
@@ -17,6 +18,7 @@ public:
 	void LoadSprites();
 private:
 	std::map<std::string, Texture2D> textureLookup;
+	std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap;
 };
 
 #endif
