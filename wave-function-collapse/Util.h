@@ -7,6 +7,8 @@
 #include <random>
 #include <algorithm>
 #include <map>
+#include <raylib.h>
+#include "Direction.h"
 
 class Util
 {
@@ -56,6 +58,7 @@ public:
 	}
 	[[nodiscard]] static std::pair<int, int> ToPos(int gridPos, int width, int height);
 	[[nodiscard]] static int ToGridPos(int x, int y, int width);
+	[[nodiscard]] static std::vector<Color> getColor(std::string name, Dir dir, const std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap);
 	
 };
 

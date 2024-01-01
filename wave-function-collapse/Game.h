@@ -36,6 +36,7 @@ private:
 	std::map<Tile, std::map<Dir, std::vector<std::string>>> map;
 	std::map<Tile, float> weights;
 	WFModel model;
+	SpriteManager sprites;
 };
 
 #endif

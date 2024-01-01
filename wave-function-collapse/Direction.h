@@ -6,8 +6,8 @@
 enum Dir
 {
 	UP,
-	DOWN,
 	RIGHT,
+	DOWN,
 	LEFT
 };
 

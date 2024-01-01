@@ -122,3 +122,24 @@ int Util::ToGridPos(int x, int y, int width)
 {
 	return width * x + y;
 }
+
+std::vector<Color> Util::getColor(std::string name, Dir dir, const std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap)
+{
+	int direction = dir;
+	const std::map<Dir, std::vector<Color>> lookup = colorMap.at(name);
+	if (name.contains("R90")) 
+	{
+		direction++;
+	}
+	else if (name.contains("R180")) 
+	{
+		direction += 2;
+	}
+	else if (name.contains("R270"))
+	{
+		direction += 3;
+	}
+
+	std::vector<Color> res = lookup.at(dir);
+	return res;
+}

@@ -8,6 +8,9 @@ void SpriteManager::LoadSprites()
 	std::cout << "Loading images" << std::endl;
 	std::filesystem::path current = std::filesystem::current_path().parent_path();
 	const std::filesystem::path path = current.append("Resources");
+	auto dirIt = std::filesystem::directory_iterator(path);
+	int files = std::count_if(begin(dirIt), end(dirIt), [](auto& entry) { return is_regular_file(entry.path()); } );
+	std::cout << files << " images." << std::endl;
 	for(const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		std::string str = entry.path().string();

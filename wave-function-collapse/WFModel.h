@@ -10,13 +10,14 @@
 #include "Direction.h"
 #include <stack>
 #include "Util.h"
+#include "SpriteManager.h"
 
 
 class WFModel
 {
 public:
 	WFModel();
-	WFModel(int width, int height, const std::map<Tile, float>& weights, const std::map<Tile, std::map<Dir, std::vector<std::string>>>& tilemap);
+	WFModel(int width, int height, const std::map<Tile, float>& weights, const SpriteManager& tilemap);
 	std::vector<Tile> Iterate();
 	[[nodiscard]] bool FullyCollapsed() const;
 	[[nodiscard]] std::vector<Tile> FinishedGrid() const;
@@ -31,7 +32,7 @@ private:
 	int height;
 	Wavefunction wavefunction;
 	std::vector<Tile> grid;
-	std::map<Tile, std::map<Dir, std::vector<std::string>>> tilemap;
+	SpriteManager sprites;
 };
 
 #endif

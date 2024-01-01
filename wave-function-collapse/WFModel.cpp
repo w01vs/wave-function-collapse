@@ -4,12 +4,12 @@
 WFModel::WFModel()
 = default;
 
-WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, const std::map<Tile, std::map<Dir, std::vector<std::string>>>& tilemap)
+WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, const SpriteManager& sprites)
 {
 	this->width = width;
 	this->height = height;
 	wavefunction = Wavefunction(width, height, weights);
-	this->tilemap = tilemap;
+	this->sprites = sprites;
 	for(int i = 0; i < width * height; ++i)
 	{
 		grid.emplace_back(TileType::EMPTY);

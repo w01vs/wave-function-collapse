@@ -21,12 +21,12 @@ Game::Game(int width, int height, int fps, const std::string& title, int cell)
 	weights[TileType::BEACH] = 1.0f / 3.0f;
 	weights[TileType::GRASS] = 1.0f / 3.0f;
 	weights[TileType::WATER] = 1.0f / 3.0f;
-	model = WFModel(this->width, this->height, weights, map);
+	model = WFModel(this->width, this->height, weights, sprites);
 
 	SetTargetFPS(fps);
 
-	SpriteManager sp;
-	sp.LoadSprites();
+	sprites = {};
+	sprites.LoadSprites();
 }
 
 Game::~Game() noexcept
