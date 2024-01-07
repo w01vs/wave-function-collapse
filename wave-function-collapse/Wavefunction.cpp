@@ -30,6 +30,13 @@ std::vector<Tile> Wavefunction::GetPossibleTilesAt(int index) const
 	return tiles[index];
 }
 
+std::vector<std::string> Wavefunction::GetPossibleTilesAtS(int index) const 
+{
+	return tilesS[index];
+}
+
+
+
 std::vector<Tile> Wavefunction::GetAllCollapsed() const
 {
 	std::vector<Tile> result;
@@ -37,6 +44,17 @@ std::vector<Tile> Wavefunction::GetAllCollapsed() const
 	for(const std::vector<Tile> t : tiles)
 	{
 		result.emplace_back(t[0]);
+	}
+	return result;
+}
+
+std::vector<std::string> Wavefunction::GetAllCollapsedS() const 
+{
+	std::vector<std::string> result;
+	result.reserve(tilesS.size());
+	for (const std::vector<std::string> s : tilesS)
+	{
+		result.emplace_back(s[0]);
 	}
 	return result;
 }
@@ -91,10 +109,52 @@ Tile Wavefunction::Collapse(int index)
 	return chosen;
 }
 
+
+std::string Wavefunction::CollapseS(int index)
+{
+	std::vector<std::pair<std::string, float>> filtered;
+	filtered.reserve(weightsS.size());
+	const std::vector<std::string> options = tilesS[index];
+	for (std::pair<std::string, float> t : weightsS)
+	{
+		if (Util::Contains(options, t.first))
+			filtered.emplace_back(t);
+	}
+
+	const float totalWeight = std::accumulate(filtered.begin(), filtered.end(), 0.0f, [](float partial, const std::pair<std::string, float>& p)
+		{
+			return partial + p.second;
+		});
+
+	float rnd = Util::RandomFloat(0.0f, 1.0f) * totalWeight;
+	std::string chosen;
+	for (const std::pair<std::string, float> pair : filtered)
+	{
+		rnd -= pair.second;
+		if (rnd < 0)
+		{
+			chosen = pair.first;
+			break;
+		}
+	}
+
+	const std::pair pos = Util::ToPos(index, width, height);
+	const int x = pos.first;
+	const int y = pos.second;
+	std::cout << x << ", " << y << " - has turned into: " << chosen << std::endl;
+	tilesS[index] = { chosen };
+	return chosen;
+}
 void Wavefunction::RemoveTileAt(int index, Tile tile)
 {
 	const auto newEnd = std::remove(tiles[index].begin(), tiles[index].end(), tile);
 	tiles[index].erase(newEnd, tiles[index].end());
+}
+
+void Wavefunction::RemoveTileAtS(int index, std::string tile) 
+{
+	const auto newEnd = std::remove(tilesS[index].begin(), tilesS[index].end(), tile);
+	tilesS[index].erase(newEnd, tilesS[index].end());
 }
 
 bool Wavefunction::Collapsed() const

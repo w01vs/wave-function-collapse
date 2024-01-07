@@ -18,15 +18,22 @@ Game::Game(int width, int height, int fps, const std::string& title, int cell)
 		{ {UP, {"BLUE", "BLUE", "BLUE"}}, {RIGHT, {"BLUE", "BLUE", "BLUE"} }, {DOWN, {"BLUE", "BLUE", "BLUE"}}, {LEFT, {"BLUE", "BLUE", "BLUE"}} }
 	};
 
+	sprites = {};
+	sprites.LoadSprites();
+
+	float weight = 1.0f / sprites.images.size();
+
 	weights[TileType::BEACH] = 1.0f / 3.0f;
 	weights[TileType::GRASS] = 1.0f / 3.0f;
 	weights[TileType::WATER] = 1.0f / 3.0f;
 	model = WFModel(this->width, this->height, weights, sprites);
+	std::map < std::string, float> res;
+	for (const auto t : sprites.images) {
+		res[t] = weight;
+	}
+	model.wavefunction.weightsS = res;
 
 	SetTargetFPS(fps);
-
-	sprites = {};
-	sprites.LoadSprites();
 }
 
 Game::~Game() noexcept
@@ -51,6 +58,7 @@ void Game::Tick()
 void Game::Draw() const
 {
 	ClearBackground(RAYWHITE);
+	/*
 	for (int i = 0; i < height * width; ++i)
 	{
 		const Tile tile = grid[i];
@@ -65,19 +73,30 @@ void Game::Draw() const
 		default: break;
 		}
 	}
+	*/
+	for (int i = 0; i < height * width; ++i) 
+	{
+		const std::string s = ngrid[i];
+		const std::pair pos = Util::ToPos(i, width, height);
+		const int x = pos.first;
+		const int y = pos.second;
+		if(!s.empty()) 
+		{
+			DrawTexture(sprites.LookupTexture(s),x, y, RAYWHITE);
+		}
+	}
 }
 
 void Game::Update()
 {
 	if(!model.FullyCollapsed())
 	{
-		grid = model.Iterate();
+		//grid = model.Iterate();
+		ngrid = model.IterateS();
 	}
 	else
 	{
-		if(!finished)
-		{
-			grid = model.FinishedGrid();
-		}
+		//grid = model.FinishedGrid();
+		ngrid = model.FinishedGridS();
 	}
 }

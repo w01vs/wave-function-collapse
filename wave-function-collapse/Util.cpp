@@ -143,3 +143,20 @@ std::vector<Color> Util::getColor(std::string name, Dir dir, const std::map<std:
 	std::vector<Color> res = lookup.at(dir);
 	return res;
 }
+
+Dir Util::OppositeDirection(const Dir dir)
+{
+	switch (dir)
+	{
+	case UP:
+		return DOWN;
+	case DOWN:
+		return UP;
+	case RIGHT:
+		return LEFT;
+	case LEFT:
+		return RIGHT;
+	}
+
+	return UP;
+}

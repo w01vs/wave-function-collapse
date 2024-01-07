@@ -33,6 +33,7 @@ private:
 	int width;
 	int height;
 	std::vector<Tile> grid;
+	std::vector<std::string> ngrid;
 	std::map<Tile, std::map<Dir, std::vector<std::string>>> map;
 	std::map<Tile, float> weights;
 	WFModel model;
