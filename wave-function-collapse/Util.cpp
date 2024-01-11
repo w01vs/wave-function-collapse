@@ -2,12 +2,12 @@
 
 
 
-std::vector<Tile> Util::Intersect(const std::vector<Tile>& first, const std::vector<Tile>& second)
+std::vector<std::string> Util::Intersect(const std::vector<std::string>& first, const std::vector<std::string>& second)
 {
-	std::vector<Tile> result;
-	for (Tile t : first)
+	std::vector<std::string> result;
+	for (std::string t : first)
 	{
-		for (Tile t2 : second) {
+		for (std::string t2 : second) {
 			if (t == t2)
 			{
 				result.push_back(t);
@@ -77,10 +77,10 @@ float Util::RandomFloat(float min, float max)
 	return distr(eng);
 }
 
-bool Util::Filled(const std::vector<Tile>& grid)
+bool Util::Filled(const std::vector<std::string>& grid)
 {
-	for (Tile t : grid) {
-		if (t == Tile{ TileType::EMPTY }) {
+	for (std::string t : grid) {
+		if (t.empty()) {
 			return false;
 		}
 	}
@@ -127,15 +127,15 @@ std::vector<Color> Util::getColor(std::string name, Dir dir, const std::map<std:
 {
 	int direction = dir;
 	const std::map<Dir, std::vector<Color>> lookup = colorMap.at(name);
-	if (name.contains("R90")) 
+	if (name.find("R90") != std::string::npos)
 	{
 		direction++;
 	}
-	else if (name.contains("R180")) 
+	else if (name.find("R180") != std::string::npos)
 	{
 		direction += 2;
 	}
-	else if (name.contains("R270"))
+	else if (name.find("R270") != std::string::npos)
 	{
 		direction += 3;
 	}

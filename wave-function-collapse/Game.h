@@ -9,7 +9,6 @@
 #include <raylib.h>
 #include <assert.h>
 #include <iostream>
-#include "Tile.h"
 #include "Direction.h"
 #include "WFModel.h"
 #include "SpriteManager.h"
@@ -32,10 +31,8 @@ private:
 	int cellsize;
 	int width;
 	int height;
-	std::vector<Tile> grid;
-	std::vector<std::string> ngrid;
-	std::map<Tile, std::map<Dir, std::vector<std::string>>> map;
-	std::map<Tile, float> weights;
+	std::vector<std::string> grid;
+	std::map<std::string, float> weights;
 	WFModel model;
 	SpriteManager sprites;
 };

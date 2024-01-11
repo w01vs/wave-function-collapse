@@ -4,7 +4,7 @@
 WFModel::WFModel()
 = default;
 
-WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, const SpriteManager& sprites)
+WFModel::WFModel(int width, int height, const std::map<std::string, float>& weights, const SpriteManager& sprites)
 {
 	this->width = width;
 	this->height = height;
@@ -16,7 +16,7 @@ WFModel::WFModel(int width, int height, const std::map<Tile, float>& weights, co
 	}
 }
 
-std::vector<Tile> WFModel::Iterate()
+std::vector<std::string> WFModel::Iterate() 
 {
 	const int index = GetLowestEntropyIndex();
 	grid[index] = wavefunction.Collapse(index);
@@ -24,66 +24,17 @@ std::vector<Tile> WFModel::Iterate()
 	return grid;
 }
 
-std::vector<std::string> WFModel::IterateS() 
-{
-	const int index = GetLowestEntropyIndex();
-	ngrid[index] = wavefunction.CollapseS(index);
-	PropagateS(index);
-	return ngrid;
-}
-
 bool WFModel::FullyCollapsed() const
 {
 	return wavefunction.Collapsed();
 }
 
-std::vector<Tile> WFModel::FinishedGrid() const
+std::vector<std::string> WFModel::FinishedGridS() const
 {
 	return wavefunction.GetAllCollapsed();
 }
 
-std::vector<std::string> WFModel::FinishedGridS() const
-{
-	return wavefunction.GetAllCollapsedS();
-}
-
 void WFModel::Propagate(int index)
-{
-	std::stack<int> stack;
-	stack.push(index);
-	while(!stack.empty())
-	{
-		const int current = stack.top();
-		stack.pop();
-		std::vector<Tile> possibleTiles = wavefunction.GetPossibleTilesAt(current);
-		std::vector<Dir> dirs = ValidNeighbours(current);
-		for(const Dir dir : dirs)
-		{
-			const int otherIndex = GetNeighbour(current, dir);
-			const std::vector<Tile> otherTiles = wavefunction.GetPossibleTilesAt(otherIndex);
-			for(const Tile otherTile : otherTiles)
-			{
-				bool tilePossible = false;
-				for(const Tile tile : possibleTiles)
-				{
-					tilePossible |= Check(tile, otherTile, dir);
-				}
-
-				if (!tilePossible && otherTiles.size() != 1)
-				{
-					wavefunction.RemoveTileAt(otherIndex, otherTile);
-					stack.push(otherIndex);
-					const std::pair pos = Util::ToPos(otherIndex, width, height);
-					const int x = pos.first;
-					const int y = pos.second;
-					std::cout << "Removed: " << otherTile << " from " << x << ", " << y << std::endl;
-				}
-			}
-		}
-	}
-}
-
-void WFModel::PropagateS(int index)
 {
 	std::stack<int> stack;
 	stack.push(index);
@@ -91,23 +42,23 @@ void WFModel::PropagateS(int index)
 	{
 		const int current = stack.top();
 		stack.pop();
-		std::vector<std::string> possibleTiles = wavefunction.GetPossibleTilesAtS(current);
+		std::vector<std::string> possibleTiles = wavefunction.GetPossibleTilesAt(current);
 		std::vector<Dir> dirs = ValidNeighbours(current);
 		for (const Dir dir : dirs)
 		{
 			const int otherIndex = GetNeighbour(current, dir);
-			const std::vector<std::string> otherTiles = wavefunction.GetPossibleTilesAtS(otherIndex);
+			const std::vector<std::string> otherTiles = wavefunction.GetPossibleTilesAt(otherIndex);
 			for (const std::string otherTile : otherTiles)
 			{
 				bool tilePossible = false;
 				for (const std::string tile : possibleTiles)
 				{
-					tilePossible |= CheckS(tile, otherTile, dir);
+					tilePossible |= Check(tile, otherTile, dir);
 				}
 
 				if (!tilePossible && otherTiles.size() != 1)
 				{
-					wavefunction.RemoveTileAtS(otherIndex, otherTile);
+					wavefunction.RemoveTileAt(otherIndex, otherTile);
 					stack.push(otherIndex);
 					const std::pair pos = Util::ToPos(otherIndex, width, height);
 					const int x = pos.first;
@@ -173,27 +124,8 @@ int WFModel::GetNeighbour(int index, Dir direction) const
 	return -1;
 }
 
-bool WFModel::Check(Tile tile1, Tile tile2, Dir dir, int rotation1, int rotation2) const
-{
-	//if (tilemap.at(tile1).at(dir) == tilemap.at(tile2).at(OppositeDirection(dir))) return true;
-	switch(tile1.type)
-	{
-	case TileType::BEACH:
-		if (tile2 == TileType::WATER or tile2 == TileType::BEACH or tile2 == TileType::GRASS) return true;
-		break;
-	case TileType::GRASS:
-		if (tile2 == TileType::GRASS or tile2 == TileType::BEACH) return true;
-		break;
-	case TileType::WATER:
-		if (tile2 == TileType::WATER or tile2 == TileType::BEACH) return true;
-		break;
-	default:
-		break;
-	}
-	return false;
-}
 
-bool WFModel::CheckS(std::string tile1, std::string tile2, Dir dir) const
+bool WFModel::Check(std::string tile1, std::string tile2, Dir dir) const
 {
 	int checking = dir;
 	int opposite = Util::OppositeDirection(dir);
@@ -201,11 +133,11 @@ bool WFModel::CheckS(std::string tile1, std::string tile2, Dir dir) const
 	std::string compare = tile2;
 	if (checking != 0) 
 	{
-		current += "R" + 90 * checking;
+		current += "R" + std::to_string(90 * checking);
 	}
 	if (opposite != 0)
 	{
-		compare += "R" + 90 * opposite;
+		compare += "R" + std::to_string(90 * opposite);
 	}
 
 	return sprites.CompareColors(compare, current, dir);

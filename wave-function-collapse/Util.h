@@ -3,21 +3,21 @@
 #define UTIL_H
 
 #include <vector>
-#include "Tile.h"
 #include <random>
 #include <algorithm>
 #include <map>
+#include <string>
 #include <raylib.h>
 #include "Direction.h"
 
 class Util
 {
 public:
-	[[nodiscard]] static std::vector<Tile> Intersect(const std::vector<Tile>& first, const std::vector<Tile>& second);
+	[[nodiscard]] static std::vector<std::string> Intersect(const std::vector<std::string>& first, const std::vector<std::string>& second);
 	[[nodiscard]] static std::vector<int> LowestAboveZero(std::vector<int> vector);
 	[[nodiscard]] static int RandomInt(int min, int max);
 	[[nodiscard]] static float RandomFloat(float min, float max);
-	[[nodiscard]] static bool Filled(const std::vector<Tile>& grid);
+	[[nodiscard]] static bool Filled(const std::vector<std::string>& grid);
 	template<typename T, typename Y>
 	[[nodiscard]] static std::vector<T> GetKeys(const std::map<T, Y>& map)
 	{

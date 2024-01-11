@@ -142,7 +142,6 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Wavefunction.cpp" />
     <ClCompile Include="WFModel.cpp" />
@@ -153,7 +152,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="Tile.h" />
     <ClInclude Include="TileType.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Wavefunction.h" />

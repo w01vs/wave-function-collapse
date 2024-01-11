@@ -1,6 +1,2 @@
 TO-DO:
-- Use sprites instead of solid rectangles
-- Following is redundant if I implement image pixel-based matching for the edges
-- This should probably be some option instead of forced
--- Actually use the triple-check for asymmetric tiles (if I actually get asymmetric tiles :) )
-- Implement rotating tiles to ease manual tile-mapping
+Fix matching correct texture names with rotations
