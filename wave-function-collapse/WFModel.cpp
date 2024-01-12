@@ -63,7 +63,7 @@ void WFModel::Propagate(int index)
 					const std::pair pos = Util::ToPos(otherIndex, width, height);
 					const int x = pos.first;
 					const int y = pos.second;
-					std::cout << "Removed: " << otherTile << " from " << x << ", " << y << std::endl;
+					//std::cout << "Removed: " << otherTile << " from " << x << ", " << y << std::endl;
 				}
 			}
 		}
@@ -127,20 +127,7 @@ int WFModel::GetNeighbour(int index, Dir direction) const
 
 bool WFModel::Check(std::string tile1, std::string tile2, Dir dir) const
 {
-	int checking = dir;
-	int opposite = Util::OppositeDirection(dir);
-	std::string current = tile1;
-	std::string compare = tile2;
-	if (checking != 0) 
-	{
-		current += "R" + std::to_string(90 * checking);
-	}
-	if (opposite != 0)
-	{
-		compare += "R" + std::to_string(90 * opposite);
-	}
-
-	return sprites.CompareColors(compare, current, dir);
+	return sprites.CompareColors(tile1, tile2, dir);
 }
 
 

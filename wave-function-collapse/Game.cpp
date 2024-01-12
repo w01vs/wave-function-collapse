@@ -49,8 +49,8 @@ void Game::Draw() const
 	{
 		const std::string s = grid[i];
 		const std::pair pos = Util::ToPos(i, width, height);
-		const int x = pos.first;
-		const int y = pos.second;
+		const int x = pos.first * cellsize;
+		const int y = pos.second * cellsize;
 		if(!s.empty()) 
 		{
 			DrawTexture(sprites.LookupTexture(s),x, y, WHITE);

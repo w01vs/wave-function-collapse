@@ -36,22 +36,22 @@ void SpriteManager::LoadSprites()
 
 		for(int i = 0; i < image.width; ++i)
 		{
-			colorMap[str][UP].emplace_back(colors[i]);
+			colorMap[str][UP].emplace_back(ColorToInt(colors[i]));
 		}
 
 		for(int i = 0; i < image.width; ++i)
 		{
-			colorMap[str][DOWN].emplace_back(colors[(image.height - 1) * image.width + i]);
+			colorMap[str][DOWN].emplace_back(ColorToInt(colors[(image.height - 1) * image.width + i]));
 		}
 
 		for(int i = 0; i < image.height; ++i)
 		{
-			colorMap[str][LEFT].emplace_back(colors[(ptrdiff_t)i * image.width]);
+			colorMap[str][LEFT].emplace_back(ColorToInt(colors[(ptrdiff_t)i * image.width]));
 		}
 
 		for(int i = 0; i < image.height; ++i)
 		{
-			colorMap[str][RIGHT].emplace_back(colors[i * image.width + image.width - 1]);
+			colorMap[str][RIGHT].emplace_back(ColorToInt(colors[i * image.width + image.width - 1]));
 		}
 
 		UnloadImageColors(colors);
@@ -80,5 +80,22 @@ void SpriteManager::LoadSprites()
 
 bool SpriteManager::CompareColors(std::string first, std::string second, Dir dir) const
 {
-	return colorMap.at(first).at(dir).data() == colorMap.at(second).at(Util::OppositeDirection(dir)).data();
+	int firstDir = dir;
+	int secondDir = Util::OppositeDirection(dir);
+	size_t fR = first.find("R");
+	size_t sR = second.find("R");
+	if (fR != std::string::npos)
+	{
+		firstDir += std::stoi(first.substr(fR + 1, 3)) / 90;
+		firstDir %= 4;
+		first.erase(first.begin() + (int)fR, first.end());
+	}
+	if (sR != std::string::npos)
+	{
+		secondDir += std::stoi(second.substr(sR + 1, 3)) / 90;
+		secondDir %= 4;
+		second.erase(second.begin() + (int)sR, second.end());
+	}
+	
+	return colorMap.at(first).at((Dir)firstDir) == colorMap.at(second).at((Dir)secondDir);
 }

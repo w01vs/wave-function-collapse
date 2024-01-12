@@ -22,7 +22,7 @@ public:
 	std::vector<std::string> images;
 private:
 	std::map<std::string, Texture2D> textureLookup;
-	std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap;
+	std::map<std::string, std::map<Dir, std::vector<int>>> colorMap;
 };
 
 #endif
