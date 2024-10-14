@@ -9,9 +9,7 @@
 #include <raylib.h>
 #include <assert.h>
 #include <iostream>
-#include "Direction.h"
 #include "WFModel.h"
-#include "SpriteManager.h"
 
 class Game {
 public:
@@ -34,7 +32,6 @@ private:
 	std::vector<std::string> grid;
 	std::map<std::string, float> weights;
 	WFModel model;
-	SpriteManager sprites;
 };
 
 #endif

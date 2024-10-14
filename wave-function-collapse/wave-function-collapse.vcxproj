@@ -137,21 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Wavefunction.cpp" />
     <ClCompile Include="WFModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Direction.h" />
-    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="TileType.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Wavefunction.h" />
