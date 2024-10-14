@@ -16,7 +16,8 @@ void Wavefunction::InitialiseTiles()
 	std::string path = std::filesystem::current_path().parent_path().string() + "\\Resources\\mapped_ids.json";
 	std::ifstream fs(path);
 	json data = json::parse(fs);
-	int j = 0;
+
+	// Parse the initial tiles themselves, no relations
 	for(auto& [key, value] : data.items())
 	{
 		int rot = value["rotation"].get<int>();
@@ -38,13 +39,9 @@ void Wavefunction::InitialiseTiles()
 		
 		tile.ids = std::move(map);
 		tiles.insert({key, tile});
-
-
-		
-
-		j++;
 	}
 
+	// Parse tile relations
 	for(auto& [key, value] : data.items())
 	{
 		std::map<Dir, std::vector<Tile*>> ts;
@@ -52,7 +49,7 @@ void Wavefunction::InitialiseTiles()
 		std::vector<std::string> down = value["map"]["down"].get<std::vector<std::string>>();
 		std::vector<std::string> right = value["map"]["right"].get<std::vector<std::string>>();
 		std::vector<std::string> left = value["map"]["left"].get<std::vector<std::string>>();
-		for(int i = 0; i < j - 1; i++)
+		for(int i = 0; i < data.size() - 1; i++)
 		{
 			if(i < up.size())
 			{
