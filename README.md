@@ -1,7 +1,4 @@
 # Wave Function Collapse
 My implementation of wave function collapse while learning C++
 
-Strongly inspired by https://github.com/robert/wavefunction-collapse/blob/master/main.py
-
-Currently working on:
-- Images as tiles
+In this branch I begin from scratch, redesigning my previous system (which I left in a broken state), as I did not want to have dig around my old code.
