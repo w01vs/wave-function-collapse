@@ -17,25 +17,25 @@ Game::~Game() noexcept
 	CloseWindow();
 }
 
-bool Game::GameShouldClose()
+bool Game::should_close()
 {
 	return WindowShouldClose();
 }
 
-void Game::Tick()
+void Game::tick()
 {
 	BeginDrawing();
-	Update();
-	Draw();
+	update();
+	draw();
 	EndDrawing();
 }
 
-void Game::Draw() const
+void Game::draw() const
 {
 	
 }
 
-void Game::Update()
+void Game::update()
 {
 
 }

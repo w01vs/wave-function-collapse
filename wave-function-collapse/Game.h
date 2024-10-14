@@ -17,12 +17,12 @@ public:
 	~Game() noexcept;
 	Game& operator=(const Game& other) = delete;
 	Game(const Game& other) = delete;
-	static bool GameShouldClose();
-	void Tick();
+	static bool should_close();
+	void tick();
 private:
 	
-	void Draw() const;
-	void Update();
+	void draw() const;
+	void update();
 
 	
 	bool finished;

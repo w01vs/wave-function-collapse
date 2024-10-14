@@ -15,10 +15,10 @@ class WFModel
 public:
 	WFModel();
 	WFModel(int width, int height);
-	void Iterate();
+	void iterate();
 	Wavefunction wavefunction;
 private:
-	void Propagate(int index);
+	void propagate(int index);
 	int width;
 	int height;
 };

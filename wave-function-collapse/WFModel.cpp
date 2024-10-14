@@ -9,13 +9,13 @@ WFModel::WFModel(int width, int height)
 	
 }
 
-void WFModel::Iterate() 
+void WFModel::iterate() 
 {
 	
 }
 
 
-void WFModel::Propagate(int index)
+void WFModel::propagate(int index)
 {
 	
 }

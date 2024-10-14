@@ -8,8 +8,8 @@ int main() {
 	constexpr int FPS = 60;
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "Game Window", 16 };
 
-	while (!Game::GameShouldClose()) {
-		game.Tick();
+	while (!Game::should_close()) {
+		game.tick();
 	}
 
 	return 0;
