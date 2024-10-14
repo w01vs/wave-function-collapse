@@ -19,8 +19,8 @@ public:
 	Wavefunction wavefunction;
 private:
 	void propagate(int index);
-	int width;
-	int height;
+	int width = 0;
+	int height = 0;
 };
 
 #endif

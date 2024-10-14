@@ -6,7 +6,8 @@ WFModel::WFModel()
 
 WFModel::WFModel(int width, int height)
 {
-	
+	this->width = width;
+	this->height = height;
 }
 
 void WFModel::iterate() 

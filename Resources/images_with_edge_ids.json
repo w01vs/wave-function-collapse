@@ -1,0 +1,272 @@
+{
+    "fullbeach_0": {
+        "image": "fullbeach.png",
+        "rotation": 0,
+        "id": {
+            "up": 0,
+            "right": 0,
+            "down": 0,
+            "left": 0
+        }
+    },
+    "fullgrass_0": {
+        "image": "fullgrass.png",
+        "rotation": 0,
+        "id": {
+            "up": 1,
+            "right": 1,
+            "down": 1,
+            "left": 1
+        }
+    },
+    "fullwater_0": {
+        "image": "fullwater.png",
+        "rotation": 0,
+        "id": {
+            "up": 2,
+            "right": 2,
+            "down": 2,
+            "left": 2
+        }
+    },
+    "grass-beach_0": {
+        "image": "grass-beach.png",
+        "rotation": 0,
+        "id": {
+            "up": 1,
+            "right": 3,
+            "down": 0,
+            "left": 3
+        }
+    },
+    "grass-beach_1": {
+        "image": "grass-beach.png",
+        "rotation": 90,
+        "id": {
+            "up": 4,
+            "right": 1,
+            "down": 4,
+            "left": 0
+        }
+    },
+    "grass-beach_2": {
+        "image": "grass-beach.png",
+        "rotation": 180,
+        "id": {
+            "up": 0,
+            "right": 4,
+            "down": 1,
+            "left": 4
+        }
+    },
+    "grass-beach_3": {
+        "image": "grass-beach.png",
+        "rotation": 270,
+        "id": {
+            "up": 3,
+            "right": 0,
+            "down": 3,
+            "left": 1
+        }
+    },
+    "quarterbeach-grass_0": {
+        "image": "quarterbeach-grass.png",
+        "rotation": 0,
+        "id": {
+            "up": 1,
+            "right": 3,
+            "down": 3,
+            "left": 1
+        }
+    },
+    "quarterbeach-grass_1": {
+        "image": "quarterbeach-grass.png",
+        "rotation": 90,
+        "id": {
+            "up": 1,
+            "right": 1,
+            "down": 4,
+            "left": 3
+        }
+    },
+    "quarterbeach-grass_2": {
+        "image": "quarterbeach-grass.png",
+        "rotation": 180,
+        "id": {
+            "up": 4,
+            "right": 1,
+            "down": 1,
+            "left": 4
+        }
+    },
+    "quarterbeach-grass_3": {
+        "image": "quarterbeach-grass.png",
+        "rotation": 270,
+        "id": {
+            "up": 3,
+            "right": 4,
+            "down": 1,
+            "left": 1
+        }
+    },
+    "quarterbeach-water_0": {
+        "image": "quarterbeach-water.png",
+        "rotation": 0,
+        "id": {
+            "up": 2,
+            "right": 2,
+            "down": 5,
+            "left": 6
+        }
+    },
+    "quarterbeach-water_1": {
+        "image": "quarterbeach-water.png",
+        "rotation": 90,
+        "id": {
+            "up": 5,
+            "right": 2,
+            "down": 2,
+            "left": 5
+        }
+    },
+    "quarterbeach-water_2": {
+        "image": "quarterbeach-water.png",
+        "rotation": 180,
+        "id": {
+            "up": 6,
+            "right": 5,
+            "down": 2,
+            "left": 2
+        }
+    },
+    "quarterbeach-water_3": {
+        "image": "quarterbeach-water.png",
+        "rotation": 270,
+        "id": {
+            "up": 2,
+            "right": 6,
+            "down": 6,
+            "left": 2
+        }
+    },
+    "quartergrass-beach_0": {
+        "image": "quartergrass-beach.png",
+        "rotation": 0,
+        "id": {
+            "up": 3,
+            "right": 0,
+            "down": 0,
+            "left": 3
+        }
+    },
+    "quartergrass-beach_1": {
+        "image": "quartergrass-beach.png",
+        "rotation": 90,
+        "id": {
+            "up": 4,
+            "right": 3,
+            "down": 0,
+            "left": 0
+        }
+    },
+    "quartergrass-beach_2": {
+        "image": "quartergrass-beach.png",
+        "rotation": 180,
+        "id": {
+            "up": 0,
+            "right": 4,
+            "down": 4,
+            "left": 0
+        }
+    },
+    "quartergrass-beach_3": {
+        "image": "quartergrass-beach.png",
+        "rotation": 270,
+        "id": {
+            "up": 0,
+            "right": 0,
+            "down": 3,
+            "left": 4
+        }
+    },
+    "quarterwater-beach_0": {
+        "image": "quarterwater-beach.png",
+        "rotation": 0,
+        "id": {
+            "up": 0,
+            "right": 5,
+            "down": 5,
+            "left": 0
+        }
+    },
+    "quarterwater-beach_1": {
+        "image": "quarterwater-beach.png",
+        "rotation": 90,
+        "id": {
+            "up": 0,
+            "right": 0,
+            "down": 6,
+            "left": 5
+        }
+    },
+    "quarterwater-beach_2": {
+        "image": "quarterwater-beach.png",
+        "rotation": 180,
+        "id": {
+            "up": 6,
+            "right": 0,
+            "down": 0,
+            "left": 6
+        }
+    },
+    "quarterwater-beach_3": {
+        "image": "quarterwater-beach.png",
+        "rotation": 270,
+        "id": {
+            "up": 5,
+            "right": 6,
+            "down": 0,
+            "left": 0
+        }
+    },
+    "water-beach_0": {
+        "image": "water-beach.png",
+        "rotation": 0,
+        "id": {
+            "up": 0,
+            "right": 5,
+            "down": 2,
+            "left": 5
+        }
+    },
+    "water-beach_1": {
+        "image": "water-beach.png",
+        "rotation": 90,
+        "id": {
+            "up": 6,
+            "right": 0,
+            "down": 6,
+            "left": 2
+        }
+    },
+    "water-beach_2": {
+        "image": "water-beach.png",
+        "rotation": 180,
+        "id": {
+            "up": 2,
+            "right": 6,
+            "down": 0,
+            "left": 6
+        }
+    },
+    "water-beach_3": {
+        "image": "water-beach.png",
+        "rotation": 270,
+        "id": {
+            "up": 5,
+            "right": 2,
+            "down": 5,
+            "left": 0
+        }
+    }
+}
