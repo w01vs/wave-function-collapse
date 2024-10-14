@@ -30,7 +30,7 @@
     <ClCompile Include="WFModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
+    <ClCompile Include="Tile.h">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>

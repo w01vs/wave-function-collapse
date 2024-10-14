@@ -1,6 +1,8 @@
 #include <iostream>
 #include <raylib.h>
 #include "Game.h"
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 int main() {
 	constexpr int SCREEN_WIDTH = 400;

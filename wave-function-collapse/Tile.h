@@ -3,14 +3,16 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <raylib.h>
+
 
 enum Dir {UP, DOWN, RIGHT, LEFT};
 
 struct Tile
 {
-	std::string img;
+	std::string name;
 	int rotation;
-	std::map<Dir, Tile> ids;
-	std::map<Dir, std::vector<Tile>> map;
-
+	std::map<Dir, int> ids;
+	std::map<Dir, std::vector<Tile*>> map;
+	Texture2D image;
 };

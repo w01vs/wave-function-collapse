@@ -197,7 +197,8 @@ def main():
                             "right": edge_ids['right'],
                             "down": edge_ids['down'],
                             "left": edge_ids['left'],
-                        }
+                        },
+                        "map": {"up": [], "down": [], "left":[], "right":[]}
                     }
 
         except Exception as e:

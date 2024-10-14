@@ -7,7 +7,7 @@ Game::Game(int width, int height, int fps, const std::string& title, int cell)
 	cellsize = cell;
 	this->width = width / cell;
 	this->height = height / cell;
-
+	Wavefunction f = {width, height};
 	SetTargetFPS(fps);
 }
 
