@@ -17,10 +17,14 @@ public:
 	WFModel(int width, int height);
 	void iterate();
 	Wavefunction wavefunction;
+	bool finished = false;
+	bool impossible = false;
+	void check_preset();
 private:
 	void propagate(int index);
 	int width = 0;
 	int height = 0;
+	std::vector<Dir> directions{UP, DOWN, RIGHT, LEFT};
 };
 
 #endif

@@ -17,8 +17,6 @@ for image_name, image_data in data.items():
 
     # Compare with other images to find compatible neighbors
     for other_image_name, other_image_data in data.items():
-        if image_name == other_image_name:
-            continue  # Skip comparing the image with itself
         
         other_ids = other_image_data['id']
 

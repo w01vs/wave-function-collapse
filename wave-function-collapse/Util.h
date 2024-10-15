@@ -8,11 +8,27 @@
 #include <map>
 #include <string>
 #include <raylib.h>
+#include "Tile.h"
 
 class Util
 {
 public:
-	[[nodiscard]] static std::vector<std::string> intersect(const std::vector<std::string>& first, const std::vector<std::string>& second);
+	template<typename T>
+	[[nodiscard]] static std::vector<T> intersect(const std::vector<T>& first, const std::vector<T>& second)
+	{
+		std::vector<T> result;
+		for(T t : first)
+		{
+			for(T t2 : second)
+			{
+				if(t == t2)
+				{
+					result.push_back(t);
+				}
+			}
+		}
+		return result;
+	}
 	[[nodiscard]] static std::vector<int> min_pos(std::vector<int> vector);
 	[[nodiscard]] static int randi(int min, int max);
 	[[nodiscard]] static float randf(float min, float max);
@@ -22,7 +38,7 @@ public:
 		std::vector<T> keys;
 		keys.reserve(map.size());
 
-		for (std::pair<T, Y> key : map)
+		for(std::pair<T, Y> key : map)
 		{
 			keys.emplace_back(key.first);
 		}
@@ -34,7 +50,7 @@ public:
 		std::vector<Y> keys;
 		keys.reserve(map.size());
 
-		for (std::pair<T, Y> key : map)
+		for(std::pair<T, Y> key : map)
 		{
 			keys.emplace_back(key.second);
 		}
@@ -56,6 +72,9 @@ public:
 	}
 	[[nodiscard]] static std::pair<int, int> from_grid(int gridPos, int width, int height);
 	[[nodiscard]] static int to_grid(int x, int y, int width);
+	[[nodiscard]] static int dir_index(const int& idx, const Dir& dir, const int& width);
+	[[nodiscard]] static Dir opposite(const Dir& dir);
+
 };
 
 #endif

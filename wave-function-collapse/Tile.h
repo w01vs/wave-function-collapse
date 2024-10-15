@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef TILE_H
+
+#define TILE_H
+
+
 #include <string>
 #include <map>
 #include <vector>
@@ -15,4 +20,5 @@ struct Tile
 	std::map<Dir, int> ids;
 	std::map<Dir, std::vector<Tile*>> map;
 	Texture2D image;
-};
+}; 
+#endif // !TILE_H

@@ -5,10 +5,11 @@
 #include <nlohmann/json.hpp>
 
 int main() {
-	constexpr int SCREEN_WIDTH = 400;
-	constexpr int SCREEN_HEIGHT = 400;
+	constexpr int SCREEN_WIDTH = 640;
+	constexpr int SCREEN_HEIGHT = 640;
 	constexpr int FPS = 60;
-	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "Game Window", 16 };
+	constexpr int CELLSIZE = 16;
+	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "Game Window", CELLSIZE };
 
 	while (!Game::should_close()) {
 		game.tick();

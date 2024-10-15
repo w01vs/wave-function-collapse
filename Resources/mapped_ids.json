@@ -10,6 +10,7 @@
         },
         "map": {
             "up": [
+                "fullbeach_0",
                 "grass-beach_0",
                 "quartergrass-beach_0",
                 "quartergrass-beach_1",
@@ -18,6 +19,7 @@
                 "water-beach_2"
             ],
             "down": [
+                "fullbeach_0",
                 "grass-beach_2",
                 "quartergrass-beach_2",
                 "quartergrass-beach_3",
@@ -26,6 +28,7 @@
                 "water-beach_0"
             ],
             "left": [
+                "fullbeach_0",
                 "grass-beach_3",
                 "quartergrass-beach_0",
                 "quartergrass-beach_3",
@@ -34,6 +37,7 @@
                 "water-beach_1"
             ],
             "right": [
+                "fullbeach_0",
                 "grass-beach_1",
                 "quartergrass-beach_1",
                 "quartergrass-beach_2",
@@ -54,21 +58,25 @@
         },
         "map": {
             "up": [
+                "fullgrass_0",
                 "grass-beach_2",
                 "quarterbeach-grass_2",
                 "quarterbeach-grass_3"
             ],
             "down": [
+                "fullgrass_0",
                 "grass-beach_0",
                 "quarterbeach-grass_0",
                 "quarterbeach-grass_1"
             ],
             "left": [
+                "fullgrass_0",
                 "grass-beach_1",
                 "quarterbeach-grass_1",
                 "quarterbeach-grass_2"
             ],
             "right": [
+                "fullgrass_0",
                 "grass-beach_3",
                 "quarterbeach-grass_0",
                 "quarterbeach-grass_3"
@@ -86,21 +94,25 @@
         },
         "map": {
             "up": [
+                "fullwater_0",
                 "quarterbeach-water_1",
                 "quarterbeach-water_2",
                 "water-beach_0"
             ],
             "down": [
+                "fullwater_0",
                 "quarterbeach-water_0",
                 "quarterbeach-water_3",
                 "water-beach_2"
             ],
             "left": [
+                "fullwater_0",
                 "quarterbeach-water_0",
                 "quarterbeach-water_1",
                 "water-beach_3"
             ],
             "right": [
+                "fullwater_0",
                 "quarterbeach-water_2",
                 "quarterbeach-water_3",
                 "water-beach_1"
@@ -133,10 +145,12 @@
                 "water-beach_0"
             ],
             "left": [
+                "grass-beach_0",
                 "quarterbeach-grass_0",
                 "quartergrass-beach_1"
             ],
             "right": [
+                "grass-beach_0",
                 "quarterbeach-grass_1",
                 "quartergrass-beach_0"
             ]
@@ -153,10 +167,12 @@
         },
         "map": {
             "up": [
+                "grass-beach_1",
                 "quarterbeach-grass_1",
                 "quartergrass-beach_2"
             ],
             "down": [
+                "grass-beach_1",
                 "quarterbeach-grass_2",
                 "quartergrass-beach_1"
             ],
@@ -203,10 +219,12 @@
                 "quarterbeach-grass_1"
             ],
             "left": [
+                "grass-beach_2",
                 "quarterbeach-grass_3",
                 "quartergrass-beach_2"
             ],
             "right": [
+                "grass-beach_2",
                 "quarterbeach-grass_2",
                 "quartergrass-beach_3"
             ]
@@ -223,10 +241,12 @@
         },
         "map": {
             "up": [
+                "grass-beach_3",
                 "quarterbeach-grass_0",
                 "quartergrass-beach_3"
             ],
             "down": [
+                "grass-beach_3",
                 "quarterbeach-grass_3",
                 "quartergrass-beach_0"
             ],
@@ -866,11 +886,13 @@
             ],
             "left": [
                 "quarterbeach-water_2",
-                "quarterwater-beach_0"
+                "quarterwater-beach_0",
+                "water-beach_0"
             ],
             "right": [
                 "quarterbeach-water_1",
-                "quarterwater-beach_1"
+                "quarterwater-beach_1",
+                "water-beach_0"
             ]
         }
     },
@@ -886,11 +908,13 @@
         "map": {
             "up": [
                 "quarterbeach-water_3",
-                "quarterwater-beach_1"
+                "quarterwater-beach_1",
+                "water-beach_1"
             ],
             "down": [
                 "quarterbeach-water_2",
-                "quarterwater-beach_2"
+                "quarterwater-beach_2",
+                "water-beach_1"
             ],
             "left": [
                 "fullwater_0",
@@ -936,11 +960,13 @@
             ],
             "left": [
                 "quarterbeach-water_3",
-                "quarterwater-beach_3"
+                "quarterwater-beach_3",
+                "water-beach_2"
             ],
             "right": [
                 "quarterbeach-water_0",
-                "quarterwater-beach_2"
+                "quarterwater-beach_2",
+                "water-beach_2"
             ]
         }
     },
@@ -956,11 +982,13 @@
         "map": {
             "up": [
                 "quarterbeach-water_0",
-                "quarterwater-beach_0"
+                "quarterwater-beach_0",
+                "water-beach_3"
             ],
             "down": [
                 "quarterbeach-water_1",
-                "quarterwater-beach_3"
+                "quarterwater-beach_3",
+                "water-beach_3"
             ],
             "left": [
                 "fullbeach_0",

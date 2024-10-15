@@ -20,18 +20,14 @@ public:
 	static bool should_close();
 	void tick();
 private:
-	
 	void draw() const;
 	void update();
 
-	
-	bool finished;
 	int cellsize;
 	int width;
 	int height;
-	std::vector<std::string> grid;
-	std::map<std::string, float> weights;
 	WFModel model;
+	std::vector<std::vector<Tile*>>& grid;
 };
 
 #endif

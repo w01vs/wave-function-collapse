@@ -2,20 +2,6 @@
 
 
 
-std::vector<std::string> Util::intersect(const std::vector<std::string>& first, const std::vector<std::string>& second)
-{
-	std::vector<std::string> result;
-	for (std::string t : first)
-	{
-		for (std::string t2 : second) {
-			if (t == t2)
-			{
-				result.push_back(t);
-			}
-		}
-	}
-	return result;
-}
 
 std::vector<int> Util::min_pos(std::vector<int> vector)
 {
@@ -111,4 +97,34 @@ std::pair<int, int> Util::from_grid(int gridPos, int width, int height)
 int Util::to_grid(int x, int y, int width)
 {
 	return y * width + x;
+}
+
+int Util::dir_index(const int& idx, const Dir& dir, const int& width)
+{
+	switch(dir)
+	{
+		case UP:
+			return up(idx, width);
+		case DOWN:
+			return down(idx, width);
+		case LEFT:
+			return left(idx, width);
+		case RIGHT:
+			return right(idx, width);
+	}
+}
+
+Dir Util::opposite(const Dir& dir)
+{
+	switch(dir)
+	{
+		case UP:
+			return DOWN;
+		case DOWN:
+			return UP;
+		case LEFT:
+			return RIGHT;
+		case RIGHT:
+			return LEFT;
+	}
 }
