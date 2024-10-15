@@ -37,27 +37,8 @@ int Wavefunction::collapse()
 	const std::vector<Tile*>& cell = grid.at(collapse_idx);
 	if(cell.size() == 0) return -2;
 	std::vector<Tile*> collapsed(1);
-	collapsed[0] = cell.at(Util::randi(0, cell.size() - 1));
-	
-
-	for(Dir& dir : directions)
-	{
-		int idx = Util::dir_index(collapse_idx, dir, width);
-		if(idx < 0 || idx >= grid.size())
-			continue;
-
-		for(auto* t : grid.at(idx))
-		{
-			bool can = false;
-			can |= !Util::contains(t->map[Util::opposite(dir)], collapsed.at(0));
-
-			if(!can)
-			{
-				int x = 0;
-			}
-		}
-		
-	}
+	int rand = Util::randi(0, cell.size() - 1);
+	collapsed[0] = cell.at(rand);
 	grid[collapse_idx] = std::move(collapsed);
 
 
@@ -129,7 +110,8 @@ void Wavefunction::initialise_tiles()
 		std::vector<std::string> down = value["map"]["down"].get<std::vector<std::string>>();
 		std::vector<std::string> right = value["map"]["right"].get<std::vector<std::string>>();
 		std::vector<std::string> left = value["map"]["left"].get<std::vector<std::string>>();
-		for(int i = 0; i < data.size() - 1; i++)
+
+		for(int i = 0; i < data.size(); i++)
 		{
 			if(i < up.size())
 			{

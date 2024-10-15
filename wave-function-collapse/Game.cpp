@@ -42,6 +42,7 @@ void Game::draw() const
 				DrawTexture(tiles.at(0)->image, pair.first * cellsize, pair.second * cellsize, WHITE);
 		}
 
+#ifdef LINES
 		for(int i = 0; i < width; i++)
 		{
 			DrawLine(i * cellsize, 0, i * cellsize, height * cellsize, BLACK);
@@ -50,7 +51,7 @@ void Game::draw() const
 		{
 			DrawLine(0, i * cellsize, width * cellsize, i * cellsize, BLACK);
 		}
-
+#endif
 }
 
 void Game::update()
