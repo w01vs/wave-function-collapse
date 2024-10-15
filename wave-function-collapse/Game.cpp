@@ -1,26 +1,15 @@
 #include "Game.h"
 
-Game::Game(int width, int height, int fps, const std::string& title, int cell)
+Game::Game(int width, int height, int fps, const std::string& title, int cell) : model({width / cell, height / cell}), grid(model.wavefunction.grid_ref())
 {
 	assert(!GetWindowHandle());
 	InitWindow(width, height, title.c_str());
 	cellsize = cell;
 	this->width = width / cell;
 	this->height = height / cell;
-	finished = false;
-	sprites = {};
-	sprites.LoadSprites();
-
-	float weight = 1.0f / sprites.images.size();
-
-	
-	std::map < std::string, float> res;
-	for (const auto t : sprites.images) {
-		res[t] = weight;
-	}
-	model = WFModel(this->width, this->height, res, sprites);
-
 	SetTargetFPS(fps);
+	model.wavefunction.initialise();
+	model.check_preset();
 }
 
 Game::~Game() noexcept
@@ -29,43 +18,49 @@ Game::~Game() noexcept
 	CloseWindow();
 }
 
-bool Game::GameShouldClose()
+bool Game::should_close()
 {
 	return WindowShouldClose();
 }
 
-void Game::Tick()
+void Game::tick()
 {
 	BeginDrawing();
-	Update();
-	Draw();
+	update();
+	draw();
 	EndDrawing();
 }
 
-void Game::Draw() const
+void Game::draw() const
 {
-	ClearBackground(RAYWHITE);
-	for (int i = 0; i < height * width; ++i) 
-	{
-		const std::string s = grid[i];
-		const std::pair pos = Util::ToPos(i, width, height);
-		const int x = pos.first * cellsize;
-		const int y = pos.second * cellsize;
-		if(!s.empty()) 
+		ClearBackground(WHITE);
+		for(int i = 0; i < grid.size(); i++)
 		{
-			DrawTexture(sprites.LookupTexture(s),x, y, WHITE);
+			const auto& tiles = grid.at(i);
+			auto pair = Util::from_grid(i, width, height);
+			if(tiles.size() == 1)
+				DrawTexture(tiles.at(0)->image, pair.first * cellsize, pair.second * cellsize, WHITE);
 		}
-	}
+
+		for(int i = 0; i < width; i++)
+		{
+			DrawLine(i * cellsize, 0, i * cellsize, height * cellsize, BLACK);
+		}
+		for(int i = 0; i < height; i++)
+		{
+			DrawLine(0, i * cellsize, width * cellsize, i * cellsize, BLACK);
+		}
+
 }
 
-void Game::Update()
+void Game::update()
 {
-	if(!model.FullyCollapsed())
+	if(!model.finished)
+		model.iterate();
+	if(model.impossible)
 	{
-		grid = model.Iterate();
+		model.wavefunction.reset();
+		model.impossible = false;
 	}
-	else
-	{
-		grid = model.FinishedGridS();
-	}
+		
 }

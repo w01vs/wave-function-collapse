@@ -9,9 +9,7 @@
 #include <raylib.h>
 #include <assert.h>
 #include <iostream>
-#include "Direction.h"
 #include "WFModel.h"
-#include "SpriteManager.h"
 
 class Game {
 public:
@@ -19,22 +17,17 @@ public:
 	~Game() noexcept;
 	Game& operator=(const Game& other) = delete;
 	Game(const Game& other) = delete;
-	static bool GameShouldClose();
-	void Tick();
+	static bool should_close();
+	void tick();
 private:
-	
-	void Draw() const;
-	void Update();
+	void draw() const;
+	void update();
 
-	
-	bool finished;
 	int cellsize;
 	int width;
 	int height;
-	std::vector<std::string> grid;
-	std::map<std::string, float> weights;
 	WFModel model;
-	SpriteManager sprites;
+	std::vector<std::vector<Tile*>>& grid;
 };
 
 #endif

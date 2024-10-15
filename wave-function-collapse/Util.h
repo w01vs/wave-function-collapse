@@ -8,58 +8,73 @@
 #include <map>
 #include <string>
 #include <raylib.h>
-#include "Direction.h"
+#include "Tile.h"
 
 class Util
 {
 public:
-	[[nodiscard]] static std::vector<std::string> Intersect(const std::vector<std::string>& first, const std::vector<std::string>& second);
-	[[nodiscard]] static std::vector<int> LowestAboveZero(std::vector<int> vector);
-	[[nodiscard]] static int RandomInt(int min, int max);
-	[[nodiscard]] static float RandomFloat(float min, float max);
-	[[nodiscard]] static bool Filled(const std::vector<std::string>& grid);
+	template<typename T>
+	[[nodiscard]] static std::vector<T> intersect(const std::vector<T>& first, const std::vector<T>& second)
+	{
+		std::vector<T> result;
+		for(T t : first)
+		{
+			for(T t2 : second)
+			{
+				if(t == t2)
+				{
+					result.push_back(t);
+				}
+			}
+		}
+		return result;
+	}
+	[[nodiscard]] static std::vector<int> min_pos(std::vector<int> vector);
+	[[nodiscard]] static int randi(int min, int max);
+	[[nodiscard]] static float randf(float min, float max);
 	template<typename T, typename Y>
-	[[nodiscard]] static std::vector<T> GetKeys(const std::map<T, Y>& map)
+	[[nodiscard]] static std::vector<T> keys(const std::map<T, Y>& map)
 	{
 		std::vector<T> keys;
 		keys.reserve(map.size());
 
-		for (std::pair<T, Y> key : map)
+		for(std::pair<T, Y> key : map)
 		{
 			keys.emplace_back(key.first);
 		}
 		return keys;
 	}
 	template <typename T, typename Y>
-	[[nodiscard]] static std::vector<Y> GetValues(const std::map<T, Y>& map)
+	[[nodiscard]] static std::vector<Y> values(const std::map<T, Y>& map)
 	{
 		std::vector<Y> keys;
 		keys.reserve(map.size());
 
-		for (std::pair<T, Y> key : map)
+		for(std::pair<T, Y> key : map)
 		{
 			keys.emplace_back(key.second);
 		}
 		return keys;
 	}
 	template<typename T>
-	[[nodiscard]] static bool Contains(const std::vector<T>& vector, T value)
+	[[nodiscard]] static bool contains(const std::vector<T>& vector, T value)
 	{
 		return std::find(vector.begin(), vector.end(), value) != vector.end();
 	}
-	[[nodiscard]] static int Right(int index, int width);
-	[[nodiscard]] static int Left(int index, int width);
-	[[nodiscard]] static int Top(int index, int width);
-	[[nodiscard]] static int Bottom(int index, int width);
+	[[nodiscard]] static int right(int index, int width);
+	[[nodiscard]] static int left(int index, int width);
+	[[nodiscard]] static int up(int index, int width);
+	[[nodiscard]] static int down(int index, int width);
 	template<typename T>
-	[[nodiscard]] static bool IsOnGrid(int index, const std::vector<T>& vector)
+	[[nodiscard]] static bool on_grid(int index, const std::vector<T>& vector)
 	{
 		return (size_t)index < vector.size() && index > -1;
 	}
-	[[nodiscard]] static std::pair<int, int> ToPos(int gridPos, int width, int height);
-	[[nodiscard]] static int ToGridPos(int x, int y, int width);
-	[[nodiscard]] static std::vector<Color> getColor(std::string name, Dir dir, const std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap);
-	[[nodiscard]] static Dir OppositeDirection(const Dir dir);
+	[[nodiscard]] static std::pair<int, int> from_grid(int gridPos, int width, int height);
+	[[nodiscard]] static int to_grid(int x, int y, int width);
+	[[nodiscard]] static int dir_index(const int& idx, const Dir& dir, const int& width);
+	[[nodiscard]] static Dir opposite(const Dir& dir);
+
 };
 
 #endif

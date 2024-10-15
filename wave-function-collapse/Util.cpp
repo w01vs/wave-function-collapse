@@ -2,22 +2,8 @@
 
 
 
-std::vector<std::string> Util::Intersect(const std::vector<std::string>& first, const std::vector<std::string>& second)
-{
-	std::vector<std::string> result;
-	for (std::string t : first)
-	{
-		for (std::string t2 : second) {
-			if (t == t2)
-			{
-				result.push_back(t);
-			}
-		}
-	}
-	return result;
-}
 
-std::vector<int> Util::LowestAboveZero(std::vector<int> vector)
+std::vector<int> Util::min_pos(std::vector<int> vector)
 {
 	std::vector<std::pair<int, int>> indexedVector;
 	indexedVector.reserve(vector.size());
@@ -54,7 +40,7 @@ std::vector<int> Util::LowestAboveZero(std::vector<int> vector)
 	return indices;
 }
 
-int Util::RandomInt(int min, int max)
+int Util::randi(int min, int max)
 {
 	if (min == max)
 		return min;
@@ -67,7 +53,7 @@ int Util::RandomInt(int min, int max)
 
 
 // !! EXCLUSIVE UPPER BOUND !!
-float Util::RandomFloat(float min, float max)
+float Util::randf(float min, float max)
 {
 	if (max == min)
 		return min;
@@ -77,86 +63,68 @@ float Util::RandomFloat(float min, float max)
 	return distr(eng);
 }
 
-bool Util::Filled(const std::vector<std::string>& grid)
-{
-	for (std::string t : grid) {
-		if (t.empty()) {
-			return false;
-		}
-	}
-	return true;
-}
-
-int Util::Right(int index, int width)
+int Util::right(int index, int width)
 {
 	if (index % width != width - 1)
 		return index + 1;
 	return -1;
 }
 
-int Util::Left(int index, int width)
+int Util::left(int index, int width)
 {
 	if (index % width != width)
 		return index - 1;
 	return -1;
 }
 
-int Util::Bottom(int index, int width)
+int Util::down(int index, int width)
 {
 	return index + width;
 }
 
-int Util::Top(int index, int width)
+int Util::up(int index, int width)
 {
 	return index - width;
 }
 
-std::pair<int, int> Util::ToPos(int gridPos, int width, int height)
+std::pair<int, int> Util::from_grid(int gridPos, int width, int height)
 {
 	int x = gridPos % height;
 	int y = (gridPos - x) / width;
 	return { x, y };
 }
 
-int Util::ToGridPos(int x, int y, int width)
+int Util::to_grid(int x, int y, int width)
 {
-	return width * x + y;
+	return y * width + x;
 }
 
-std::vector<Color> Util::getColor(std::string name, Dir dir, const std::map<std::string, std::map<Dir, std::vector<Color>>> colorMap)
+int Util::dir_index(const int& idx, const Dir& dir, const int& width)
 {
-	int direction = dir;
-	const std::map<Dir, std::vector<Color>> lookup = colorMap.at(name);
-	if (name.find("R90") != std::string::npos)
+	switch(dir)
 	{
-		direction++;
+		case UP:
+			return up(idx, width);
+		case DOWN:
+			return down(idx, width);
+		case LEFT:
+			return left(idx, width);
+		case RIGHT:
+			return right(idx, width);
 	}
-	else if (name.find("R180") != std::string::npos)
-	{
-		direction += 2;
-	}
-	else if (name.find("R270") != std::string::npos)
-	{
-		direction += 3;
-	}
-
-	std::vector<Color> res = lookup.at(dir);
-	return res;
 }
 
-Dir Util::OppositeDirection(const Dir dir)
+Dir Util::opposite(const Dir& dir)
 {
-	switch (dir)
+	switch(dir)
 	{
-	case UP:
-		return DOWN;
-	case DOWN:
-		return UP;
-	case RIGHT:
-		return LEFT;
-	case LEFT:
-		return RIGHT;
+		case UP:
+			return DOWN;
+		case DOWN:
+			return UP;
+		case LEFT:
+			return RIGHT;
+		case RIGHT:
+			return LEFT;
 	}
-
-	return UP;
 }
